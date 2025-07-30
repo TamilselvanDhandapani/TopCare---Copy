@@ -46,20 +46,13 @@ const Navbar = () => {
       }`}
     >
       <div className="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
-        <nav className="flex justify-between items-center h-16">
+        <nav className="flex justify-between items-center h-20">
           {/* Logo with medical icon */}
           <Link to="/" className="flex items-center">
-            <div className="flex items-center justify-center w-14 h-14 rounded-full  mr-2">
+            <div className="flex items-center justify-center w-16 h-16 rounded-full  mr-2">
              <img src={logo}/>
             </div>
-            <div className="flex flex-col">
-              <span className="text-xl font-bold text-gray-800 leading-tight">
-                TOPCare
-              </span>
-              <span className="text-xs text-blue-600 font-medium">
-                 Hospital
-              </span>
-            </div>
+           
           </Link>
 
           {/* Desktop Navigation */}

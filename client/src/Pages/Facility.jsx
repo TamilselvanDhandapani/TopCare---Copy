@@ -46,18 +46,15 @@ const Facility = () => {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <span className="text-[#00509d] text-2xl font-semibold">
-              OUR FACILITIES
-            </span>
+            <span className="text-[#00509d] text-2xl font-semibold">OUR FACILITIES</span>
             <h2 className="text-4xl font-bold text-[#00509d] mt-2 mb-4">
               Advanced Infrastructure & Services
             </h2>
             <p className="text-lg text-[#00509d] max-w-3xl mx-auto">
-              Empowering our specialists with world-class facilities to deliver
-              exceptional care.
+              Empowering our specialists with world-class facilities to deliver exceptional care.
             </p>
           </div>
-          <div className="flex flex-wrap justify-center gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {facilities.map((facility, index) => (
               <motion.div
                 key={index}

@@ -58,7 +58,7 @@ const Home = () => {
   ];
 
   return (
-    <div className="pt-12">
+    <div className="pt-10">
       {/* Hero Section */}
       <section className="bg-white text-white py-20">
         <div className="max-w-7xl mx-auto px-6 flex flex-col lg:flex-row items-center justify-between gap-12">

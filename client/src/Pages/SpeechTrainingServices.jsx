@@ -199,7 +199,7 @@ const SpeechTrainingServices = () => {
   ];
 
   return (
-    <div className="pt-12 bg-white min-h-screen bg-[url('/pattern-bg.png')] bg-cover bg-fixed bg-center">
+    <div className="pt-12 bg-white min-h-screen  bg-cover bg-fixed bg-center">
       <section className="max-w-7xl mx-auto px-4 py-16">
         {/* Header */}
         <div className="text-center mb-16">

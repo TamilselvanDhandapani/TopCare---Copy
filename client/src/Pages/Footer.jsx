@@ -4,7 +4,7 @@ import { FaPhoneAlt, FaMapMarkerAlt, FaClock, FaFacebook, FaTwitter, FaInstagram
 
 const Footer = () => {
   return (
-    <footer className="bg-white text-gray-800 pt-12 pb-8 px-2 border-t border-gray-200">
+    <footer className="bg-white text-gray-800 pt-12 pb-8 px-6 border-t border-gray-200">
       <div className="max-w-7xl mx-auto">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">

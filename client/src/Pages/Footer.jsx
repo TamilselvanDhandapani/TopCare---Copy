@@ -1,6 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { FaPhoneAlt, FaMapMarkerAlt, FaClock, FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from "react-icons/fa";
+import {
+  FaPhoneAlt,
+  FaMapMarkerAlt,
+  FaClock,
+  FaFacebook,
+  FaTwitter,
+  FaInstagram,
+  FaLinkedin,
+} from "react-icons/fa";
+import logo from "../assets/web.png";
 
 const Footer = () => {
   return (
@@ -9,28 +18,41 @@ const Footer = () => {
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
           {/* Hospital Info */}
-          <div className="space-y-4">
+          <div className="space-y-2">
             <div className="flex items-center">
-              <div className="bg-[#00509d] p-2 rounded-lg mr-3">
-                <FaMapMarkerAlt className="text-white text-xl" />
-              </div>
-              <h3 className="text-xl font-bold text-[#00509d]">TOP Care Hospital</h3>
+              
+
+              <h3 className="text-xl font-bold text-[#00509d]">
+                TOP Care Hospital
+              </h3>
             </div>
             <p className="text-gray-600 leading-relaxed">
-              Specialized orthopedic and speech-language rehabilitation center providing 
-              compassionate care with cutting-edge treatments.
+              Specialized orthopedic and speech-language rehabilitation center
+              providing compassionate care with cutting-edge treatments.
             </p>
             <div className="flex space-x-4 pt-2">
-              <a href="#" className="text-gray-500 hover:text-[#00509d] transition-colors">
+              <a
+                href="#"
+                className="text-gray-500 hover:text-[#00509d] transition-colors"
+              >
                 <FaFacebook className="text-xl" />
               </a>
-              <a href="#" className="text-gray-500 hover:text-[#00509d] transition-colors">
+              <a
+                href="#"
+                className="text-gray-500 hover:text-[#00509d] transition-colors"
+              >
                 <FaTwitter className="text-xl" />
               </a>
-              <a href="#" className="text-gray-500 hover:text-[#00509d] transition-colors">
+              <a
+                href="#"
+                className="text-gray-500 hover:text-[#00509d] transition-colors"
+              >
                 <FaInstagram className="text-xl" />
               </a>
-              <a href="#" className="text-gray-500 hover:text-[#00509d] transition-colors">
+              <a
+                href="#"
+                className="text-gray-500 hover:text-[#00509d] transition-colors"
+              >
                 <FaLinkedin className="text-xl" />
               </a>
             </div>
@@ -50,8 +72,8 @@ const Footer = () => {
                 { name: "Contact", path: "/contact" },
               ].map((item, index) => (
                 <li key={index}>
-                  <Link 
-                    to={item.path} 
+                  <Link
+                    to={item.path}
                     className="text-gray-600 hover:text-[#00509d] font-medium transition-colors flex items-center"
                   >
                     {item.name}
@@ -81,9 +103,6 @@ const Footer = () => {
                   <p className="text-gray-600">4:00 PM – 7:30 PM</p>
                 </div>
               </div>
-              <p className="text-gray-500 italic text-sm pt-2">
-                *Emergency services available 24/7
-              </p>
             </div>
           </div>
 
@@ -120,30 +139,35 @@ const Footer = () => {
         <div className="pt-8 border-t border-gray-200">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-500 text-sm mb-4 md:mb-0">
-              &copy; {new Date().getFullYear()} TOPCare Hospital. All rights reserved.
+              &copy; {new Date().getFullYear()} TOPCare Hospital. All rights
+              reserved.
             </p>
             <div className="flex flex-wrap justify-center gap-4 text-sm">
-              <a href="#" className="text-gray-500 hover:text-[#00509d] transition-colors">
+              <a
+                href="#"
+                className="text-gray-500 hover:text-[#00509d] transition-colors"
+              >
                 Terms & Conditions
               </a>
-              <a href="#" className="text-gray-500 hover:text-[#00509d] transition-colors">
+              <a
+                href="#"
+                className="text-gray-500 hover:text-[#00509d] transition-colors"
+              >
                 Privacy Policy
               </a>
-              
             </div>
           </div>
         </div>
 
-
         <div className="text-center mt-6">
-          <a 
-                href="https://www.nenius.com/" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-gray-500 hover:text-[#00509d] transition-colors"
-              >
-                Designed by NENIUS Technologies
-              </a>
+          <a
+            href="https://www.nenius.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-gray-500 hover:text-[#00509d] transition-colors"
+          >
+            Designed by NENIUS Technologies
+          </a>
         </div>
       </div>
     </footer>

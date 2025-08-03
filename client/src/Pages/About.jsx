@@ -2,171 +2,204 @@ import React, { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { motion } from "framer-motion";
-import { FaEye, FaBullseye } from "react-icons/fa";
-import { GiStethoscope } from "react-icons/gi";
+import {
+  FaEye,
+  FaBullseye,
+  FaHandHoldingHeart,
+} from "react-icons/fa";
+import {
+  MdHealthAndSafety,
+  MdPrecisionManufacturing,
+} from "react-icons/md";
 
 const About = () => {
   useEffect(() => {
     AOS.init({ duration: 800, once: true });
   }, []);
 
+  const stats = [
+    { value: "15+", label: "Years Experience" },
+    { value: "10K+", label: "Patients Treated" },
+    { value: "98%", label: "Patient Satisfaction" },
+    { value: "24/7", label: "Emergency Care" },
+  ];
+
+  const doctors = [
+    {
+      name: "Dr. S.P. Thiyagu",
+      degree: "M.S (Ortho)., (JIPMER)",
+      expertise: "Orthopedics, Bone Fracture, Joint Surgery",
+      image: "https://images.pexels.com/photos/5452293/pexels-photo-5452293.jpeg",
+    },
+    {
+      name: "C. Kiruthiga Thiyagu",
+      degree: "M.Sc. (Sp & Hg)",
+      expertise: "Speech and Language Rehabilitation",
+      image: "https://images.pexels.com/photos/5215024/pexels-photo-5215024.jpeg",
+    },
+  ];
+
+  const values = [
+    {
+      title: "Compassion",
+      desc: "We treat every patient with empathy, respect, and kindness.",
+      icon: <FaHandHoldingHeart className="text-3xl text-[#00509d]" />,
+    },
+    {
+      title: "Excellence",
+      desc: "We maintain the highest standards of medical care and professionalism.",
+      icon: <MdHealthAndSafety className="text-3xl text-[#00509d]" />,
+    },
+    {
+      title: "Innovation",
+      desc: "We embrace advanced techniques and technologies for better outcomes.",
+      icon: <MdPrecisionManufacturing className="text-3xl text-[#00509d]" />,
+    },
+  ];
+
   return (
-    <div className="pt-16 bg-white min-h-screen overflow-x-hidden">
-      
-
-      {/* Main Content */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-16">
-        {/* About Introduction */}
-        <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold text-[#00509d] mb-6" data-aos="fade-down">
-            Our Story
-          </h2>
-          <div className="max-w-4xl mx-auto">
-            <p className="text-gray-700 text-lg leading-relaxed mb-6" data-aos="fade-up">
-              Founded by <strong className="text-[#00509d]">Dr. Thiyagu</strong>, Thiyagu Ortho & Pain Care Hospital began with a simple yet powerful vision: to provide exceptional orthopedic treatment, pain management, and rehabilitation services to our community.
-            </p>
-            <p className="text-gray-700 text-lg leading-relaxed" data-aos="fade-up" data-aos-delay="100">
-              What started as a modest practice has grown into a trusted healthcare institution, combining cutting-edge technology with compassionate care to help patients regain their mobility and quality of life.
-            </p>
-          </div>
-        </div>
-
-        {/* Vision & Mission Cards */}
-        <div className="grid md:grid-cols-2 gap-8 mb-16">
-          <motion.div
-            className="bg-white p-8 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-all"
-            data-aos="fade-right"
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            whileHover={{ y: -5 }}
-            transition={{ duration: 0.3 }}
-            viewport={{ once: true }}
+    <div className="bg-white text-gray-700 overflow-x-hidden">
+      {/* Hero Section */}
+      <section className="relative pt-32 pb-20 px-4 sm:px-6 bg-gradient-to-br from-blue-50 via-white to-blue-100">
+        <div className="max-w-4xl mx-auto text-center">
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+            className="text-5xl font-bold text-[#00509d] mb-4"
           >
-            <div className="flex flex-col items-center text-center">
-              <div className="bg-blue-50 p-4 rounded-full mb-4">
-                <FaEye className="text-[#00509d] text-2xl" />
-              </div>
-              <h3 className="text-2xl font-bold text-[#00509d] mb-4">Our Vision</h3>
-              <p className="text-gray-600 leading-relaxed">
-                To be the premier center for orthopedic and speech therapy services in the region, delivering personalized, innovative care that transforms lives through evidence-based rehabilitation and cutting-edge technology.
-              </p>
-            </div>
-          </motion.div>
-
-          <motion.div
-            className="bg-white p-8 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-all"
-            data-aos="fade-left"
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            whileHover={{ y: -5 }}
-            transition={{ duration: 0.3 }}
-            viewport={{ once: true }}
-          >
-            <div className="flex flex-col items-center text-center">
-              <div className="bg-blue-50 p-4 rounded-full mb-4">
-                <FaBullseye className="text-[#00509d] text-2xl" />
-              </div>
-              <h3 className="text-2xl font-bold text-[#00509d] mb-4">Our Mission</h3>
-              <p className="text-gray-600 leading-relaxed">
-                To provide exceptional orthopedic and speech rehabilitation through compassionate, technology-driven care, building lasting relationships founded on clinical excellence and patient-centered innovation for all.
-              </p>
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Doctors Section */}
-        <div className="text-center mb-12">
-          <h3 className="text-3xl font-bold text-[#00509d] mb-4" data-aos="fade-down">
-            Meet Our Specialists
-          </h3>
-          <p className="text-gray-600 max-w-2xl mx-auto text-lg" data-aos="fade-up">
-            Our team of dedicated healthcare professionals brings expertise and compassion to every patient interaction.
+            About <span className="text-blue-400">Thiyagu Ortho</span>
+          </motion.h1>
+          <p className="text-lg text-gray-700 leading-relaxed">
+            Pioneering orthopedic and rehabilitation care with compassion,
+            expertise, and cutting-edge technology.
           </p>
         </div>
+      </section>
 
-        <div className="grid md:grid-cols-2 gap-8 mb-16">
-          <motion.div
-            className="bg-white p-8 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-all"
-            data-aos="zoom-in"
-            whileHover={{ y: -5 }}
-          >
-            <div className="flex flex-col items-center text-center">
-              <div className="relative mb-6">
-                <img
-                  src="https://images.pexels.com/photos/5452293/pexels-photo-5452293.jpeg"
-                  alt="Dr. S.P. Thiyagu"
-                  className="w-48 h-48 rounded-full object-cover border-4 border-blue-50"
-                />
-                <div className="absolute -bottom-2 right-2 bg-[#00509d] text-white p-2 rounded-full">
-                  <GiStethoscope className="text-xl" />
-                </div>
-              </div>
-              <h4 className="text-xl font-bold text-[#00509d] mb-1">
-                Dr. S.P. Thiyagu
-              </h4>
-              <p className="text-[#00509d] font-medium mb-3">M.S (Ortho)., (JIPMER)</p>
-              <p className="text-gray-600">
-                Expert in Orthopedics, Bone Fracture, Joint Surgery
-              </p>
-            </div>
+      {/* Story Section */}
+      <section className="relative py-20 bg-white">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center px-4 sm:px-6">
+          <motion.div className="rounded-2xl shadow-lg overflow-hidden" data-aos="fade-right">
+            <img
+              src="https://images.pexels.com/photos/668298/pexels-photo-668298.jpeg"
+              className="w-full h-[400px] object-cover"
+              alt="Facility"
+            />
           </motion.div>
 
-          <motion.div
-            className="bg-white p-8 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-all"
-            data-aos="zoom-in"
-            data-aos-delay="100"
-            whileHover={{ y: -5 }}
-          >
-            <div className="flex flex-col items-center text-center">
-              <div className="relative mb-6">
-                <img
-                  src="https://images.pexels.com/photos/5215024/pexels-photo-5215024.jpeg"
-                  alt="C. Kiruthiga Thiyagu"
-                  className="w-48 h-48 rounded-full object-cover border-4 border-blue-50"
-                />
-                <div className="absolute -bottom-2 right-2 bg-[#00509d] text-white p-2 rounded-full">
-                  <GiStethoscope className="text-xl" />
-                </div>
-              </div>
-              <h4 className="text-xl font-bold text-[#00509d] mb-1">
-                C. Kiruthiga Thiyagu
-              </h4>
-              <p className="text-[#00509d] font-medium mb-3">M.Sc. (Sp & Hg)</p>
-              <p className="text-gray-600">
-                Speech and Language Rehabilitation Specialist
-              </p>
+          <motion.div data-aos="fade-left">
+            <h2 className="text-3xl font-semibold text-[#00509d] mb-4">
+              Our <span className="text-blue-400">Story</span>
+            </h2>
+            <div className="space-y-4 text-gray-700">
+              <p><strong className="text-[#00509d]">Dr. Thiyagu</strong> founded the hospital with a vision to transform orthopedic care in the community.</p>
+              <p>We combine advanced medical technology with a deep sense of compassion to restore mobility and quality of life.</p>
+              <p>What began as a small clinic has grown into a trusted center of care, while maintaining our personalized touch.</p>
             </div>
           </motion.div>
         </div>
+      </section>
 
-        {/* Values Section */}
-        <div className="bg-blue-50 rounded-xl p-8 md:p-12 mb-16">
-          <h3 className="text-3xl font-bold text-[#00509d] text-center mb-8" data-aos="fade-down">
-            Our Core Values
-          </h3>
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              {
-                title: "Compassion",
-                desc: "We treat every patient with empathy, respect, and kindness."
-              },
-              {
-                title: "Excellence",
-                desc: "We maintain the highest standards of medical care and professionalism."
-              },
-              {
-                title: "Innovation",
-                desc: "We embrace advanced techniques and technologies for better outcomes."
-              }
-            ].map((value, index) => (
-              <motion.div 
+      {/* Vision & Mission Section */}
+      <section className="py-20 bg-blue-50">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <h2 className="text-3xl font-bold text-center text-[#00509d] mb-12">
+            Our Vision & Mission
+          </h2>
+          <div className="grid md:grid-cols-2 gap-8">
+            <motion.div
+              className="bg-white p-8 rounded-2xl shadow-lg border border-blue-100 hover:shadow-xl"
+              data-aos="fade-up"
+              whileHover={{ y: -8 }}
+            >
+              <div className="text-center">
+                <div className="bg-blue-100 p-4 rounded-full inline-block mb-4">
+                  <FaEye className="text-2xl text-[#00509d]" />
+                </div>
+                <h3 className="text-xl font-bold text-[#00509d] mb-2">Our Vision</h3>
+                <p>
+                  To be the premier center for orthopedic and speech therapy,
+                  transforming lives through personalized, innovative care.
+                </p>
+              </div>
+            </motion.div>
+
+            <motion.div
+              className="bg-white p-8 rounded-2xl shadow-lg border border-blue-100 hover:shadow-xl"
+              data-aos="fade-up"
+              data-aos-delay="100"
+              whileHover={{ y: -8 }}
+            >
+              <div className="text-center">
+                <div className="bg-blue-100 p-4 rounded-full inline-block mb-4">
+                  <FaBullseye className="text-2xl text-[#00509d]" />
+                </div>
+                <h3 className="text-xl font-bold text-[#00509d] mb-2">Our Mission</h3>
+                <p>
+                  To deliver exceptional orthopedic and speech rehabilitation
+                  through compassionate, technology-driven care.
+                </p>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Doctors Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center">
+          <h2 className="text-3xl font-bold text-[#00509d] mb-4">
+            Meet Our <span className="text-blue-400">Specialists</span>
+          </h2>
+          <p className="text-gray-600 mb-12 max-w-2xl mx-auto">
+            Combining clinical excellence with patient-focused care.
+          </p>
+
+          <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-10 justify-items-center">
+            {doctors.map((doctor, index) => (
+              <motion.div
                 key={index}
-                className="bg-white p-6 rounded-lg shadow-sm"
+                className="bg-white w-full max-w-sm rounded-2xl overflow-hidden shadow-md hover:shadow-xl border border-gray-100 transition-all"
+                data-aos="fade-up"
+                whileHover={{ y: -5 }}
+              >
+                <div className="relative">
+                  <img
+                    src={doctor.image}
+                    className="w-full h-60 object-cover"
+                    alt={doctor.name}
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-gray-900">{doctor.name}</h3>
+                  <p className="text-[#00509d] font-medium">{doctor.degree}</p>
+                  <p className="text-sm text-gray-600 mt-2">{doctor.expertise}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Core Values Section */}
+      <section className="py-20 bg-blue-50">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center">
+          <h2 className="text-3xl font-bold text-[#00509d] mb-12">
+            Our Core <span className="text-blue-400">Values</span>
+          </h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            {values.map((value, index) => (
+              <motion.div
+                key={index}
+                className="bg-white rounded-xl p-6 shadow hover:shadow-lg border border-blue-100 transition-all flex flex-col items-center"
                 data-aos="fade-up"
                 data-aos-delay={index * 100}
+                whileHover={{ y: -5 }}
               >
-                <h4 className="text-xl font-bold text-[#00509d] mb-3">{value.title}</h4>
-                <p className="text-gray-600">{value.desc}</p>
+                <div className="mb-4 text-center">{value.icon}</div>
+                <h3 className="text-lg font-semibold text-[#00509d]">{value.title}</h3>
+                <p className="text-gray-600 mt-2">{value.desc}</p>
               </motion.div>
             ))}
           </div>

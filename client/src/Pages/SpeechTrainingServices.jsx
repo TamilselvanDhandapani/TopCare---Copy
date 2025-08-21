@@ -289,7 +289,7 @@ const SpeechTrainingServices = () => {
   ];
 
   return (
-    <div className="bg-white">
+    <div className="bg-white py-12">
       {/* -------------------- MODERN HERO -------------------- */}
       <section className="relative overflow-hidden bg-gradient-to-br from-[#f0f8ff] to-[#e6f2ff] py-16 md:py-24">
         {/* Background elements */}

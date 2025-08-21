@@ -68,7 +68,7 @@ const About = () => {
             transition={{ duration: 0.7 }}
             className="text-5xl font-bold text-[#00509d] mb-4"
           >
-            About <span className="text-blue-400">Thiyagu Ortho</span>
+            About <span className="text-blue-400">Thiyagu Ortho & Pain Care</span>
           </motion.h1>
           <p className="text-lg text-gray-700 leading-relaxed">
             Pioneering orthopedic and rehabilitation care with compassion,

@@ -52,7 +52,7 @@ const FeatureCard = ({ icon, title, description, image, index, aosDelay = 0 }) =
     </div>
 
     {/* Corner accent blob */}
-    <div className="pointer-events-none absolute -bottom-10 -right-10 h-24 w-24 rounded-tl-[2rem] bg-[#1a76bc] opacity-90 transition-transform duration-500 group-hover:translate-x-10 group-hover:translate-y-10" />
+    <div className="pointer-events-none absolute -bottom-10 -right-10 h-22 w-24 rounded-tl-[2rem] bg-[#1a76bc] opacity-90 transition-transform duration-500 group-hover:translate-x-10 group-hover:translate-y-10" />
   </div>
 );
 
@@ -302,8 +302,8 @@ const SpeechTrainingServices = () => {
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div data-aos="fade-right" data-aos-delay="100">
-              <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur rounded-full px-4 py-2 text-sm font-medium text-[#00509d] mb-6 border border-[#00509d]/20">
-                <span className="h-2 w-2 rounded-full bg-[#00509d]"></span>
+              <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur rounded-full px-4 py-2 text-lg font-medium text-[#00509d] mb-6 border border-[#00509d]/20">
+                
                 Chandru's Speech & Language Centre
               </div>
               

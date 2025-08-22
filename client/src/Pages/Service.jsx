@@ -53,7 +53,7 @@ const FeatureCard = ({ icon, title, description, image, index, aosDelay = 0 }) =
     </div>
 
     {/* Corner accent blob */}
-    <div className="pointer-events-none absolute -bottom-10 -right-10 h-24 w-24 rounded-tl-[2rem] bg-[#1a76bc] opacity-90 transition-transform duration-500 group-hover:translate-x-10 group-hover:translate-y-10" />
+    <div className="pointer-events-none absolute -bottom-10 -right-10 h-22 w-24 rounded-tl-[2rem] bg-[#1a76bc] opacity-90 transition-transform duration-500 group-hover:translate-x-10 group-hover:translate-y-10" />
   </div>
 );
 

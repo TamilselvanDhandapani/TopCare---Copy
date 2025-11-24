@@ -147,12 +147,7 @@ const ProgramCarousel = ({ items }) => {
                     {/* Gradient Overlay */}
                     <div className="absolute inset-0 bg-gradient-to-tr from-[#0b2d56]/40 via-transparent to-transparent" />
 
-                    {/* Badge */}
-                    <div className="absolute top-4 left-4 bg-white/90 rounded-full px-4 py-2 shadow">
-                      <span className="text-[#00509d] font-semibold text-sm">
-                        Program {index + 1}
-                      </span>
-                    </div>
+                    
                   </div>
 
                   {/* Decorative Elements */}
@@ -273,7 +268,7 @@ const SpeechTrainingServices = () => {
     name: "Chandru's Speech & Language Centre - Top Care Hospital",
     description:
       "Speech therapy centre in Sathyamangalam, Erode offering diagnosis, assessment and therapy for speech, language and communication disorders in children and adults.",
-    url: "https://topcarehospital.com/speech-therapy", // TODO: replace with actual live URL
+    url: "https://topcarehospital.com/speech-therapy",
     telephone: "+91-4295-222435",
     address: {
       "@type": "PostalAddress",
@@ -407,37 +402,73 @@ const SpeechTrainingServices = () => {
     },
   ];
 
-  /* -------------------- Carousel Items -------------------- */
+  /* -------------------- Carousel Items (now covering all key services) -------------------- */
   const carouselItems = [
+    {
+      title: "Speech & Language Assessment & Diagnosis",
+      img: "/SpeechOne.jpg",
+      alt: "Child speech and language assessment in Sathyamangalam",
+      text: "Detailed diagnosis of speech and language disorders in children and adults using standardized tools and observation. This forms the foundation for individualized therapy planning.",
+    },
     {
       title: "Autism Spectrum Disorder (ASD) Program",
       img: "/SpeechThree.jpg",
       alt: "Autism speech therapy program in Sathyamangalam",
-      text: "Comprehensive therapy program designed to enhance communication, social skills, and behavioral development for children with autism. Our evidence-based approach includes social skills training and parent coaching.",
-    },
-    {
-      title: "Speech & Language Assessment",
-      img: "/SpeechOne.jpg",
-      alt: "Child speech and language assessment",
-      text: "Detailed diagnostic evaluations to identify speech and language challenges. Our certified pathologists use standardized tests and observational methods to create personalized intervention plans.",
-    },
-    {
-      title: "Cochlear Implant Rehabilitation",
-      img: "/SpeechSeven.jpg",
-      alt: "Cochlear implant speech therapy in Erode district",
-      text: "Specialized auditory-verbal therapy for children and adults with cochlear implants. Focus on sound discrimination, language development, and communication skills in real-world environments.",
+      text: "Comprehensive therapy designed to strengthen communication, social interaction and functional language in children with autism, with strong focus on parent training and home strategies.",
     },
     {
       title: "ADHD & Executive Function Training",
       img: "/SpeechFour.jpg",
       alt: "ADHD communication training program",
-      text: "Targeted interventions to improve attention, organization, and communication skills. Combining behavioral strategies with speech therapy to enhance academic and social success.",
+      text: "Targeted interventions to improve attention, listening skills, task completion and expressive language in children with ADHD and attention-related difficulties.",
+    },
+    {
+      title: "Brain Development & Epilepsy Support",
+      img: "/SpeechTwo.jpg",
+      alt: "Speech therapy for brain development disorders and epilepsy",
+      text: "Communication-focused therapy for children with brain development disorders and epilepsy, aiming to build understanding, expression and everyday functional communication.",
     },
     {
       title: "Cerebral Palsy Communication Program",
       img: "/SpeechFive.jpg",
       alt: "Cerebral palsy speech therapy in Sathyamangalam",
-      text: "Multidisciplinary approach to support communication in children with cerebral palsy. Includes AAC device training, oral motor exercises, and family-centered therapy sessions.",
+      text: "Multidisciplinary communication program for children with cerebral palsy and neurodevelopmental conditions, including oral-motor work, AAC support and caregiver coaching.",
+    },
+    {
+      title: "Cochlear Implant Rehabilitation",
+      img: "/SpeechSeven.jpg",
+      alt: "Cochlear implant speech therapy in Erode district",
+      text: "Specialized auditory-verbal therapy after cochlear implant surgery focusing on listening, sound discrimination, vocabulary building and connected speech in everyday settings.",
+    },
+    {
+      title: "Learning Disability & I.E.P. Program",
+      img: "/SpeechOne.jpg",
+      alt: "Speech and language support for learning disability and IEP",
+      text: "Language and communication support for children with learning disabilities, including help with classroom language, reading comprehension and individualized education programs (I.E.P.).",
+    },
+    {
+      title: "Articulation & Speech Clarity Program",
+      img: "/SpeechTwo.jpg",
+      alt: "Articulation and speech clarity therapy for children",
+      text: "Therapy focused on correcting mispronunciations, unclear speech and sound errors so children and adults can be understood clearly in school, work and social settings.",
+    },
+    {
+      title: "Disorganized Speech & Fluency Therapy",
+      img: "/SpeechThree.jpg",
+      alt: "Therapy for disorganized and fragmented speech",
+      text: "Structured sessions to help individuals with disorganized or fragmented speech develop more coherent, fluent and meaningful sentences in conversation.",
+    },
+    {
+      title: "Voice Disorder & Voice Care Clinic",
+      img: "/SpeechFive.jpg",
+      alt: "Voice therapy for voice disorders",
+      text: "Voice therapy for hoarseness, vocal strain and pitch issues with techniques for healthy voice production, breath support and vocal hygiene education.",
+    },
+    {
+      title: "Post-Stroke & Neuro Speech Rehabilitation",
+      img: "/SpeechSeven.jpg",
+      alt: "Post-stroke speech rehabilitation at Top Care Hospital",
+      text: "Comprehensive rehabilitation for adults after stroke, head injury or accidents, targeting speech, language, swallowing and cognitive-communication skills to regain independence.",
     },
   ];
 
@@ -459,7 +490,6 @@ const SpeechTrainingServices = () => {
           content="speech therapy centre in sathyamangalam, speech therapist for kids erode, autism speech therapy sathyamangalam, cochlear implant speech therapy erode, speech therapy for cerebral palsy, Chandru's Speech & Language Centre, Top Care Hospital"
         />
         <meta name="robots" content="index,follow" />
-        {/* TODO: replace href with actual deployed URL of this page */}
         <link
           rel="canonical"
           href="https://topcarehospital.com/speech-therapy"
@@ -482,7 +512,7 @@ const SpeechTrainingServices = () => {
         <meta property="og:site_name" content="Top Care Hospital" />
         <meta
           property="og:image"
-          content="https://topcarehospital.com/og-speech-therapy.jpg" // TODO: set a real OG image
+          content="https://topcarehospital.com/og-speech-therapy.jpg"
         />
 
         {/* Twitter Cards */}

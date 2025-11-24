@@ -43,14 +43,15 @@ const staggerContainer = {
 };
 
 const About = () => {
-  // SEO Structured Data: Organization
+  // SEO Structured Data: Organization / Hospital
   const organizationSchema = {
     "@context": "https://schema.org",
-    "@type": "MedicalOrganization",
-    name: "Thiyagu Ortho & Speech Care - Top Care Hospital",
+    "@type": "Hospital",
+    name: "Top Care Hospital – Thiyagu Ortho and Pain Care Hospital",
+    alternateName: "Thiyagu Ortho & Speech Care",
     url: "https://topcarehospital.com/about",
     description:
-      "Thiyagu Ortho & Speech Care at Top Care Hospital in Sathyamangalam, Erode district, Tamil Nadu provides orthopedic surgery, trauma care, rehabilitation and speech-language therapy under one roof.",
+      "Top Care Hospital – Thiyagu Ortho and Pain Care Hospital (Thiyagu Ortho & Speech Care) in Sathyamangalam, Erode district, Tamil Nadu provides orthopedic surgery, trauma care, rehabilitation and speech-language therapy under one roof.",
     medicalSpecialty: ["Orthopedic", "SpeechPathology", "Rehabilitation"],
     address: {
       "@type": "PostalAddress",
@@ -72,11 +73,11 @@ const About = () => {
         name: "Dr. S.P. Thiyagu",
         jobTitle: "Orthopedic Surgeon",
         description:
-          "Orthopedic surgeon specialising in fracture care, joint replacement and trauma management at Thiyagu Ortho & Speech Care, Sathyamangalam.",
+          "Orthopedic surgeon specialising in fracture care, joint replacement and trauma management at Top Care Hospital – Thiyagu Ortho and Pain Care Hospital in Sathyamangalam.",
         medicalSpecialty: ["Orthopedic"],
         affiliation: {
           "@type": "Hospital",
-          name: "Top Care Hospital",
+          name: "Top Care Hospital – Thiyagu Ortho and Pain Care Hospital",
           url: "https://topcarehospital.com/",
         },
       },
@@ -89,7 +90,7 @@ const About = () => {
         medicalSpecialty: ["SpeechPathology", "Rehabilitation"],
         affiliation: {
           "@type": "Hospital",
-          name: "Top Care Hospital",
+          name: "Top Care Hospital – Thiyagu Ortho and Pain Care Hospital",
           url: "https://topcarehospital.com/",
         },
       },
@@ -138,22 +139,27 @@ const About = () => {
     { label: "Years of Expertise", value: "15+", icon: <FaUserMd /> },
     { label: "Patients Treated", value: "10k+", icon: <FaBone /> },
     { label: "Success Rate", value: "98%", icon: <FaAward /> },
-    { label: "Dual Specialities", value: "Ortho + Speech", icon: <FaComments /> },
+    {
+      label: "Dual Specialities",
+      value: "Ortho + Speech",
+      icon: <FaComments />,
+    },
   ];
 
   return (
     <>
       <Helmet>
         <title>
-          About Thiyagu Ortho &amp; Speech Care | Top Care Hospital Sathyamangalam
+          About Top Care Hospital – Thiyagu Ortho and Pain Care Hospital | Ortho
+          &amp; Speech Centre Sathyamangalam
         </title>
         <meta
           name="description"
-          content="Learn about Thiyagu Ortho & Speech Care at Top Care Hospital in Sathyamangalam, Erode. Integrated orthopedic surgery, trauma care, rehabilitation and speech-language therapy under one roof."
+          content="Learn about Top Care Hospital – Thiyagu Ortho and Pain Care Hospital (Thiyagu Ortho & Speech Care) in Sathyamangalam, Erode district. Integrated orthopedic surgery, trauma care, rehabilitation and speech-language therapy under one roof."
         />
         <meta
           name="keywords"
-          content="orthopedic hospital in sathyamangalam, ortho doctor erode district, Thiyagu Ortho & Speech Care, speech therapy Sathyamangalam, child speech therapy Erode, autism speech therapy, ADHD therapy, post stroke rehab Sathyamangalam"
+          content="Top Care Hospital, Thiyagu Ortho and Pain Care Hospital, Thiyagu Ortho & Speech Care, orthopedic hospital in Sathyamangalam, ortho doctor Erode district, speech therapy Sathyamangalam, child speech therapy Erode, autism speech therapy, ADHD therapy, post stroke rehab Sathyamangalam"
         />
         <meta name="robots" content="index,follow" />
         <link rel="canonical" href="https://topcarehospital.com/about" />
@@ -204,8 +210,8 @@ const About = () => {
                   variants={fadeInUp}
                   className="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-2 border border-white/30 mb-5 backdrop-blur-sm"
                 >
-                   <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-blue-100">
-                     Ortho &amp; Speech Centre
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-blue-100">
+                    Ortho &amp; Speech Centre
                   </span>
                 </motion.div>
 
@@ -225,7 +231,8 @@ const About = () => {
                   variants={fadeInUp}
                   className="text-base sm:text-lg text-blue-100 max-w-2xl mb-5 leading-relaxed"
                 >
-                  Thiyagu Ortho &amp; Speech Care brings together orthopedic
+                  Top Care Hospital – Thiyagu Ortho and Pain Care Hospital
+                  (Thiyagu Ortho &amp; Speech Care) brings together orthopedic
                   surgery, rehabilitation and speech-language therapy—so your
                   family doesn&apos;t have to travel to multiple places for
                   complete care in and around Sathyamangalam.
@@ -260,7 +267,7 @@ const About = () => {
                   </Link>
                   <Link
                     to="/services"
-                    className="inline-flex items-center justify-center rounded-full border border-white/70 text-white px-6 py-3 text-sm sm:text-base font-semibold hover:bg-white hover:text-[#00509d] transition-all"
+                    className="inline-flex items-center justify-center rounded-full border border-white/70 text-white px-6 py-3 text-sm sm:text-base font-semibold hover:bg:white hover:text-[#00509d] transition-all"
                   >
                     View Services
                   </Link>
@@ -290,7 +297,7 @@ const About = () => {
               </h2>
 
               <p className="mt-4 text-base sm:text-lg text-slate-700 max-w-3xl mx-auto">
-                Thiyagu Ortho &amp; Speech Care at Top Care Hospital brings
+                Top Care Hospital – Thiyagu Ortho and Pain Care Hospital brings
                 trusted orthopedics and speech-language therapy together so
                 families in Sathyamangalam and Erode district get coordinated,
                 modern care close to home.
@@ -298,7 +305,7 @@ const About = () => {
             </motion.div>
 
             <motion.div
-              className="relative rounded-3xl p-8 bg-gradient-to-b from-white to-slate-50 border border-slate-100 shadow-lg"
+              className="relative rounded-3xl p-8 bg-gradient-to-b from:white to-slate-50 border border-slate-100 shadow-lg"
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, amount: 0.3 }}
@@ -339,7 +346,7 @@ const About = () => {
                     variants={fadeInUp}
                     className="flex flex-col items-center text-center gap-4 bg-white/80 backdrop-blur-sm rounded-3xl p-6 border border-slate-100 shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all"
                   >
-                    <div className="h-20 w-20 rounded-xl flex items-center justify-center bg-gradient-to-br from-white to-slate-50 border border-slate-100">
+                    <div className="h-20 w-20 rounded-xl flex items-center justify-center bg-gradient-to-br from:white to-slate-50 border border-slate-100">
                       {item.icon}
                     </div>
                     <h3 className="text-lg font-semibold text-[#0b2d56]">
@@ -391,7 +398,7 @@ const About = () => {
               {/* Ortho card */}
               <motion.div
                 variants={fadeInUp}
-                className="relative flex flex-col items-center text-center rounded-3xl bg-white p-8 border border-slate-100 shadow-lg hover:shadow-2xl transition-all"
+                className="relative flex flex-col items-center text-center rounded-3xl bg:white p-8 border border-slate-100 shadow-lg hover:shadow-2xl transition-all"
               >
                 <div className="absolute -top-8 right-8 h-24 w-24 rounded-full bg-[#e0f2fe] blur-3xl opacity-70" />
                 <div className="flex items-center justify-center h-16 w-16 rounded-2xl bg-[#e0f2fe] text-[#00509d] mb-4">
@@ -422,7 +429,7 @@ const About = () => {
               {/* Speech card */}
               <motion.div
                 variants={fadeInUp}
-                className="relative flex flex-col items-center text-center rounded-3xl bg-white p-8 border border-slate-100 shadow-lg hover:shadow-2xl transition-all"
+                className="relative flex flex-col items-center text-center rounded-3xl bg:white p-8 border border-slate-100 shadow-lg hover:shadow-2xl transition-all"
               >
                 <div className="absolute -bottom-10 left-8 h-24 w-24 rounded-full bg-[#ede9fe] blur-3xl opacity-70" />
                 <div className="flex items-center justify-center h-16 w-16 rounded-2xl bg-[#ede9fe] text-[#6d28d9] mb-4">
@@ -454,7 +461,7 @@ const About = () => {
         </section>
 
         {/* ================== MEDICAL TEAM ================== */}
-        <section className="py-16 bg-white">
+        <section className="py-16 bg:white">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div
               className="text-center mb-12"
@@ -487,7 +494,7 @@ const About = () => {
                 <motion.div
                   key={doctor.name}
                   variants={fadeInUp}
-                  className="group bg-white rounded-3xl overflow-hidden shadow-md border border-slate-200 hover:shadow-2xl hover:-translate-y-2 transition-all"
+                  className="group bg:white rounded-3xl overflow-hidden shadow-md border border-slate-200 hover:shadow-2xl hover:-translate-y-2 transition-all"
                 >
                   <div className="relative overflow-hidden">
                     <img
@@ -495,7 +502,7 @@ const About = () => {
                       alt={`${doctor.name} - ${doctor.specialization}`}
                       className="w-full h-72 object-cover object-top group-hover:scale-105 transition-transform duration-500"
                     />
-                    <div className="absolute top-4 left-4 rounded-full bg-white/90 px-4 py-1 text-xs font-semibold text-[#00509d] shadow">
+                    <div className="absolute top-4 left-4 rounded-full bg:white/90 px-4 py-1 text-xs font-semibold text-[#00509d] shadow">
                       {index === 0 ? "Orthopedics Lead" : "Speech Therapy Lead"}
                     </div>
                     <div className="absolute bottom-4 right-4 rounded-full bg-[#00509d] px-3 py-1 text-xs font-semibold text-white shadow">
@@ -556,7 +563,7 @@ const About = () => {
                 <motion.div
                   key={value.title}
                   variants={fadeInUp}
-                  className="bg-white rounded-3xl p-7 shadow-sm border border-[#e2e8f0] hover:shadow-xl hover:-translate-y-1 transition-all text-center"
+                  className="bg:white rounded-3xl p-7 shadow-sm border border-[#e2e8f0] hover:shadow-xl hover:-translate-y-1 transition-all text-center"
                 >
                   <div className="flex items-center justify-center mb-5">
                     <div className="h-14 w-14 rounded-2xl bg-[#f3f8fd] flex items-center justify-center shadow-sm">
@@ -576,7 +583,7 @@ const About = () => {
         </section>
 
         {/* ================== CTA ================== */}
-        <section className="py-16 bg-gradient-to-br from-[#0b2d56] via-[#1a76bc] to-[#2b8adf] text-white relative overflow-hidden">
+        <section className="py-16 bg-gradient-to-br from-[#0b2d56] via-[#1a76bc] to-[#2b8adf] text:white relative overflow-hidden">
           <div className="absolute inset-0 opacity-10">
             <div
               className="absolute inset-0"
@@ -618,14 +625,14 @@ const About = () => {
             >
               <Link
                 to="/contact"
-                className="group inline-flex items-center justify-center gap-2 rounded-full bg-white text-[#00509d] px-8 sm:px-10 py-3.5 sm:py-4 text-sm sm:text-base font-semibold shadow-xl hover:bg-slate-100 transition-all"
+                className="group inline-flex items-center justify-center gap-2 rounded-full bg:white text-[#00509d] px-8 sm:px-10 py-3.5 sm:py-4 text-sm sm:text-base font-semibold shadow-xl hover:bg-slate-100 transition-all"
               >
                 Book Your Appointment
                 <FaArrowRight className="group-hover:translate-x-1 transition-transform text-xs" />
               </Link>
               <Link
                 to="/speech-therapy"
-                className="inline-flex items-center justify-center rounded-full border border-white/70 text-white px-8 sm:px-10 py-3.5 sm:py-4 text-sm sm:text-base font-semibold hover:bg-white/10 transition-all"
+                className="inline-flex items-center justify-center rounded-full border border-white/70 text:white px-8 sm:px-10 py-3.5 sm:py-4 text-sm sm:text-base font-semibold hover:bg:white/10 transition-all"
               >
                 Explore Speech Programs
               </Link>

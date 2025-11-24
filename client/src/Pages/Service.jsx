@@ -136,6 +136,26 @@ const Services = () => {
     ],
   };
 
+  // JSON-LD: BreadcrumbList for this page
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: "https://topcarehospital.com/",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Services",
+        item: "https://topcarehospital.com/services",
+      },
+    ],
+  };
+
   // JSON-LD: FAQ to target “People also ask” around services
   const faqSchema = {
     "@context": "https://schema.org",
@@ -189,9 +209,47 @@ const Services = () => {
         <meta name="robots" content="index,follow" />
         <link rel="canonical" href="https://topcarehospital.com/services" />
 
+        {/* Open Graph */}
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:title"
+          content="Orthopedic & Spine Services | Top Care Hospital Sathyamangalam"
+        />
+        <meta
+          property="og:description"
+          content="Fracture treatment, spine surgery, joint replacement, sports injury care and microscopic surgery at Top Care Hospital, Sathyamangalam, Erode district."
+        />
+        <meta
+          property="og:url"
+          content="https://topcarehospital.com/services"
+        />
+        <meta property="og:site_name" content="Top Care Hospital" />
+        <meta
+          property="og:image"
+          content="https://topcarehospital.com/og-services.jpg" // make sure to add this image
+        />
+
+        {/* Twitter Cards */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          name="twitter:title"
+          content="Orthopedic & Spine Services | Top Care Hospital Sathyamangalam"
+        />
+        <meta
+          name="twitter:description"
+          content="Explore fracture care, pain relief, joint replacement and spine surgery services at Top Care Hospital in Sathyamangalam, Erode district."
+        />
+        <meta
+          name="twitter:image"
+          content="https://topcarehospital.com/og-services.jpg"
+        />
+
         {/* Structured Data */}
         <script type="application/ld+json">
           {JSON.stringify(servicesPageSchema)}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify(breadcrumbSchema)}
         </script>
         <script type="application/ld+json">
           {JSON.stringify(faqSchema)}

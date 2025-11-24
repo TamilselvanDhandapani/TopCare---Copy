@@ -96,9 +96,10 @@ const Home = () => {
   const hospitalSchema = {
     "@context": "https://schema.org",
     "@type": "Hospital",
-    name: "Top Care Hospital",
+    name: "Top Care Hospital – Thiyagu Ortho and Pain Care Hospital",
+    alternateName: "Thiyagu Ortho and Pain Care Hospital",
     description:
-      "Top Care Hospital is a specialised orthopedic, neurology and speech therapy hospital in Sathyamangalam, Erode district, Tamil Nadu.",
+      "Top Care Hospital – Thiyagu Ortho and Pain Care Hospital is a specialised orthopedic, neurology and speech therapy hospital in Sathyamangalam, Erode district, Tamil Nadu.",
     url: "https://topcarehospital.com/",
     telephone: "+91-4295-222435",
     address: {
@@ -107,10 +108,10 @@ const Home = () => {
         "113/21-24, SRN Street, Opp. to Old Bus Stand, Court Backside",
       addressLocality: "Sathyamangalam",
       addressRegion: "Tamil Nadu",
-      postalCode: "638402", // update if different
+      postalCode: "638402",
       addressCountry: "IN",
     },
-    image: "https://topcarehospital.com/og-image.jpg", // TODO: replace with real hosted image
+    image: "https://topcarehospital.com/og-image.jpg", // replace with real hosted image
     medicalSpecialty: [
       "Orthopedic",
       "Neurology",
@@ -122,7 +123,7 @@ const Home = () => {
   const webSiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "Top Care Hospital",
+    name: "Top Care Hospital – Thiyagu Ortho and Pain Care Hospital",
     url: "https://topcarehospital.com/",
   };
 
@@ -224,17 +225,17 @@ const Home = () => {
       <Helmet>
         {/* Basic SEO */}
         <title>
-          Top Care Orthopedic &amp; Speech Therapy Hospital in Sathyamangalam,
-          Erode | 24/7 Emergency Care
+          Top Care Hospital – Thiyagu Ortho and Pain Care Hospital | Orthopedic
+          &amp; Speech Therapy in Sathyamangalam, Erode
         </title>
 
         <meta
           name="description"
-          content="Top Care Hospital is a specialised orthopedic, neurology and speech therapy hospital in Sathyamangalam, Erode district, Tamil Nadu. We offer 24/7 orthopedic emergency care, fracture treatment, joint replacement surgery, sports injury management and child speech therapy."
+          content="Top Care Hospital – Thiyagu Ortho and Pain Care Hospital is a specialised orthopedic, neurology and speech therapy hospital in Sathyamangalam, Erode district, Tamil Nadu. 24/7 orthopedic emergency care, fracture treatment, joint replacement surgery, sports injury management and child speech therapy."
         />
         <meta
           name="keywords"
-          content="ortho hospital in sathyamangalam, orthopedic hospital in erode district, orthopedic doctor sathyamangalam, speech therapy centre in sathyamangalam, speech therapist for kids erode, Top Care Hospital"
+          content="Thiyagu Ortho and Pain Care Hospital, Top Care Hospital Sathyamangalam, ortho hospital in sathyamangalam, orthopedic hospital in erode district, orthopedic doctor sathyamangalam, speech therapy centre in sathyamangalam, speech therapist for kids erode"
         />
         <meta name="robots" content="index,follow" />
         <link rel="canonical" href="https://topcarehospital.com/" />
@@ -243,28 +244,31 @@ const Home = () => {
         <meta property="og:type" content="website" />
         <meta
           property="og:title"
-          content="Top Care Orthopedic & Speech Therapy Hospital in Sathyamangalam, Erode"
+          content="Top Care Hospital – Thiyagu Ortho and Pain Care Hospital | Orthopedic & Speech Therapy in Sathyamangalam, Erode"
         />
         <meta
           property="og:description"
-          content="24/7 orthopedic emergency, joint replacement, sports injury care and child speech therapy at Top Care Hospital, Sathyamangalam, Erode district, Tamil Nadu."
+          content="24/7 orthopedic emergency, joint replacement, sports injury care and child speech therapy at Top Care Hospital – Thiyagu Ortho and Pain Care Hospital in Sathyamangalam, Erode district, Tamil Nadu."
         />
         <meta property="og:url" content="https://topcarehospital.com/" />
-        <meta property="og:site_name" content="Top Care Hospital" />
+        <meta
+          property="og:site_name"
+          content="Top Care Hospital – Thiyagu Ortho and Pain Care Hospital"
+        />
         <meta
           property="og:image"
-          content="https://topcarehospital.com/og-image.jpg" // replace with real OG image
+          content="https://topcarehospital.com/og-image.jpg"
         />
 
         {/* Twitter Cards */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta
           name="twitter:title"
-          content="Top Care Orthopedic & Speech Therapy Hospital in Sathyamangalam, Erode"
+          content="Top Care Hospital – Thiyagu Ortho and Pain Care Hospital | Orthopedic & Speech Therapy in Sathyamangalam, Erode"
         />
         <meta
           name="twitter:description"
-          content="24/7 orthopedic emergency, joint replacement, sports injury care and child speech therapy at Top Care Hospital, Sathyamangalam, Erode district, Tamil Nadu."
+          content="24/7 orthopedic emergency, joint replacement, sports injury care and child speech therapy at Top Care Hospital – Thiyagu Ortho and Pain Care Hospital in Sathyamangalam, Erode district, Tamil Nadu."
         />
         <meta
           name="twitter:image"
@@ -288,7 +292,7 @@ const Home = () => {
           <div className="absolute inset-0 -z-20">
             <img
               src="https://images.pexels.com/photos/668298/pexels-photo-668298.jpeg"
-              alt="Top Care Hospital in Sathyamangalam, Erode - modern hospital background"
+              alt="Top Care Hospital – Thiyagu Ortho and Pain Care Hospital in Sathyamangalam, Erode - modern hospital background"
               className="h-full w-full object-cover"
             />
           </div>
@@ -300,7 +304,7 @@ const Home = () => {
             {/* Left Content */}
             <div className="w-3/4 space-y-5 text-white">
               <span className="inline-flex items-center gap-2 rounded-full bg-[#f3f8fd] px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-[#00509d]">
-                Trusted Ortho &amp; Speech Care 
+                Trusted Ortho & Speech Care
               </span>
 
               <h1 className="text-4xl lg:text-5xl font-bold leading-tight text-white">
@@ -311,10 +315,11 @@ const Home = () => {
               </h1>
 
               <p className="text-sm md:text-base text-white/90 max-w-xl">
-                Top Care Hospital offers advanced orthopedic, neurology and
-                speech therapy services in Sathyamangalam, Tamil Nadu. From
-                fracture care and joint replacement to specialised child speech
-                and language therapy, we provide 24/7 patient-centred care.
+                Top Care Hospital – Thiyagu Ortho and Pain Care Hospital offers
+                advanced orthopedic, neurology and speech therapy services in
+                Sathyamangalam, Tamil Nadu. From fracture care and joint
+                replacement to specialised child speech and language therapy, we
+                provide 24/7 patient-centred care.
               </p>
 
               <div className="flex flex-wrap gap-4 items-center mt-4">

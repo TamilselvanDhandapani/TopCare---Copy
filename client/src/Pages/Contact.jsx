@@ -35,7 +35,7 @@ const Contact = () => {
     e.preventDefault();
 
     const { name, email, phone, message } = formData;
-    const hospitalNumber = "9361784871"; // WhatsApp number
+    const hospitalNumber = "9486113831"; // WhatsApp number
 
     const text = `New Message from Top Care Hospital Website:
     
@@ -50,20 +50,25 @@ Please respond at your earliest convenience.`;
     window.open(`https://wa.me/${hospitalNumber}?text=${encodedText}`, "_blank");
   };
 
-  // JSON-LD: ContactPage + Hospital contact details
+  // JSON-LD: ContactPage
   const contactPageSchema = {
     "@context": "https://schema.org",
     "@type": "ContactPage",
-    name: "Contact Top Care Hospital Sathyamangalam",
+    name: "Contact Top Care Hospital – Thiyagu Ortho and Pain Care Hospital Sathyamangalam",
     url: "https://topcarehospital.com/contact",
     description:
-      "Contact Top Care Hospital in Sathyamangalam, Erode district for orthopedic, neurology and speech therapy appointments and emergencies.",
+      "Contact Top Care Hospital – Thiyagu Ortho and Pain Care Hospital in Sathyamangalam, Erode district for orthopedic, neurology, pain care and speech therapy appointments and emergencies.",
   };
 
+  // JSON-LD: Hospital contact details
   const hospitalContactSchema = {
     "@context": "https://schema.org",
     "@type": "Hospital",
-    name: "Top Care Hospital - Thiyagu Ortho & Pain Care",
+    name: "Top Care Hospital – Thiyagu Ortho and Pain Care Hospital",
+    alternateName: [
+      "Thiyagu Ortho & Pain Care Hospital",
+      "Thiyagu Ortho & Speech Care",
+    ],
     url: "https://topcarehospital.com/",
     telephone: "+91-4295-222435",
     address: {
@@ -85,7 +90,7 @@ Please respond at your earliest convenience.`;
       },
       {
         "@type": "ContactPoint",
-        telephone: "+91-9361784871",
+        telephone: "+91-6381603832",
         contactType: "customer service",
         areaServed: "IN",
         availableLanguage: ["en", "ta"],
@@ -123,16 +128,15 @@ Please respond at your earliest convenience.`;
     <>
       <Helmet>
         <title>
-          Contact Top Care Hospital Sathyamangalam | Ortho &amp; Speech Therapy
-          Appointments
+          Contact Top Care Hospital – Thiyagu Ortho and Pain Care Hospital | Ortho &amp; Speech Therapy Appointments
         </title>
         <meta
           name="description"
-          content="Contact Top Care Hospital in Sathyamangalam, Erode for orthopedic emergencies, fracture care, joint pain, neurology and speech therapy appointments. Call 04295 222435 / 9361784871 or send us a WhatsApp message."
+          content="Contact Top Care Hospital – Thiyagu Ortho and Pain Care Hospital in Sathyamangalam, Erode for orthopedic emergencies, fracture care, joint pain, neurology and speech therapy appointments. Call 04295 222435 / 6381603832 or send us a WhatsApp message."
         />
         <meta
           name="keywords"
-          content="contact ortho hospital sathyamangalam, top care hospital phone number, Thiyagu Ortho and Pain Care contact, speech therapy hospital contact Sathyamangalam, orthopedic hospital erode contact"
+          content="Top Care Hospital contact, Thiyagu Ortho and Pain Care Hospital contact, contact ortho hospital sathyamangalam, top care hospital phone number, speech therapy hospital contact Sathyamangalam, orthopedic hospital erode contact"
         />
         <meta name="robots" content="index,follow" />
         <link rel="canonical" href="https://topcarehospital.com/contact" />
@@ -191,15 +195,11 @@ Please respond at your earliest convenience.`;
                     </h4>
                     <p className="text-sm text-gray-700">
                       Morning:{" "}
-                      <span className="font-medium">
-                        9:00 AM – 2:00 PM
-                      </span>
+                      <span className="font-medium">9:00 AM – 2:00 PM</span>
                     </p>
                     <p className="text-sm text-gray-700">
                       Evening:{" "}
-                      <span className="font-medium">
-                        4:00 PM – 7:30 PM
-                      </span>
+                      <span className="font-medium">4:00 PM – 7:30 PM</span>
                     </p>
                     <p className="text-xs text-gray-500 mt-1">
                       *Emergency services available 24/7
@@ -217,18 +217,20 @@ Please respond at your earliest convenience.`;
                       Contact Numbers
                     </h4>
                     <p className="text-sm text-gray-700">
-                      Landline: <span className="font-medium">04295 222435</span>
+                      Landline:{" "}
+                      <span className="font-medium">04295 222435</span>
                     </p>
                     <p className="text-sm text-gray-700">
-                      Alternate: <span className="font-medium">04295 297466</span>
+                      Alternate:{" "}
+                      <span className="font-medium">04295 297466</span>
                     </p>
                     <p className="text-sm text-gray-700">
                       Mobile:{" "}
                       <a
-                        href="tel:+919361784871"
+                        href="tel:+916381603832"
                         className="font-medium text-[#00509d]"
                       >
-                        9361784871
+                        6381603832
                       </a>
                     </p>
                   </div>
@@ -248,7 +250,7 @@ Please respond at your earliest convenience.`;
                       appointments and reports.
                     </p>
                     <a
-                      href="https://wa.me/9361784871"
+                      href="https://wa.me/9486113831"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center px-4 py-2 rounded-full bg-[#22c55e] text-white text-xs md:text-sm font-semibold shadow-md hover:bg-[#16a34a] transition-colors"

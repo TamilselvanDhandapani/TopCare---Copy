@@ -97,10 +97,10 @@ const Facility = () => {
   const facilitiesPageSchema = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    name: "Hospital Facilities - Top Care Hospital Sathyamangalam",
-    url: "https://topcarehospital.com/facilities", // TODO: adjust to actual URL
+    name: "Hospital Facilities - Top Care Hospital – Thiyagu Ortho and Pain Care Hospital Sathyamangalam",
+    url: "https://topcarehospital.com/facilities",
     description:
-      "Overview of hospital facilities at Top Care Hospital in Sathyamangalam, Erode district, including operation theatres, ICU, pharmacy and rehabilitation centre.",
+      "Overview of hospital facilities at Top Care Hospital – Thiyagu Ortho and Pain Care Hospital in Sathyamangalam, Erode district, including operation theatres, ICU, pharmacy, C-arm X-ray and rehabilitation centre.",
   };
 
   const breadcrumbSchema = {
@@ -117,7 +117,7 @@ const Facility = () => {
         "@type": "ListItem",
         position: 2,
         name: "Facilities",
-        item: "https://topcarehospital.com/facilities", // TODO: adjust to actual URL
+        item: "https://topcarehospital.com/facilities",
       },
     ],
   };
@@ -127,54 +127,53 @@ const Facility = () => {
       {/* ---------- SEO for Facilities page ---------- */}
       <Helmet>
         <title>
-          Hospital Facilities in Sathyamangalam, Erode | Top Care Orthopedic &
-          Neuro Hospital
+          Hospital Facilities in Sathyamangalam, Erode | Top Care Hospital – Thiyagu Ortho and Pain Care Hospital
         </title>
 
         <meta
           name="description"
-          content="Explore the hospital facilities at Top Care Hospital in Sathyamangalam, Erode district – twin operation theatres, ICU, C-arm and digital X-ray, 24x7 pharmacy, pain and paralysis relief centre and rehabilitation services."
+          content="Explore the hospital facilities at Top Care Hospital – Thiyagu Ortho and Pain Care Hospital in Sathyamangalam, Erode district – twin operation theatres, ICU, C-arm and digital X-ray, 24x7 pharmacy, pain and paralysis relief centre and rehabilitation services."
         />
         <meta
           name="keywords"
-          content="hospital facilities in sathyamangalam, orthopedic hospital facilities erode, operation theatre sathyamangalam, ICU hospital erode district, C arm x ray sathyamangalam, physiotherapy centre sathyamangalam, Top Care Hospital"
+          content="Thiyagu Ortho and Pain Care Hospital facilities, hospital facilities in sathyamangalam, orthopedic hospital facilities erode, operation theatre sathyamangalam, ICU hospital erode district, C arm x-ray sathyamangalam, physiotherapy centre sathyamangalam, Top Care Hospital"
         />
         <meta name="robots" content="index,follow" />
-        {/* TODO: replace with the real deployed URL for this page */}
-        <link
-          rel="canonical"
-          href="https://topcarehospital.com/facilities"
-        />
+        <link rel="canonical" href="https://topcarehospital.com/facilities" />
 
         {/* Open Graph */}
         <meta property="og:type" content="website" />
         <meta
           property="og:title"
-          content="Hospital Facilities in Sathyamangalam, Erode | Top Care Hospital"
+          content="Hospital Facilities in Sathyamangalam, Erode | Top Care Hospital – Thiyagu Ortho and Pain Care Hospital"
         />
         <meta
           property="og:description"
-          content="Twin operation theatres, ICU, C-arm X-ray, 24x7 pharmacy and rehabilitation facilities at Top Care Hospital, Sathyamangalam, Erode district."
+          content="Twin operation theatres, ICU, C-arm X-ray, 24x7 pharmacy and rehabilitation facilities at Top Care Hospital – Thiyagu Ortho and Pain Care Hospital, Sathyamangalam, Erode district."
         />
         <meta
           property="og:url"
           content="https://topcarehospital.com/facilities"
         />
-        <meta property="og:site_name" content="Top Care Hospital" />
+        <meta
+          property="og:site_name"
+          content="Top Care Hospital – Thiyagu Ortho and Pain Care Hospital"
+        />
+        {/* Replace this with a real hosted image on your domain when ready */}
         <meta
           property="og:image"
-          content="https://topcarehospital.com/og-facilities.jpg" // TODO: set a real OG image
+          content="https://topcarehospital.com/og-facilities.jpg"
         />
 
         {/* Twitter Cards */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta
           name="twitter:title"
-          content="Hospital Facilities in Sathyamangalam, Erode | Top Care Hospital"
+          content="Hospital Facilities in Sathyamangalam, Erode | Top Care Hospital – Thiyagu Ortho and Pain Care Hospital"
         />
         <meta
           name="twitter:description"
-          content="View the advanced hospital infrastructure and facilities available at Top Care Hospital, Sathyamangalam, Erode district."
+          content="View the advanced hospital infrastructure and facilities available at Top Care Hospital – Thiyagu Ortho and Pain Care Hospital, Sathyamangalam, Erode district."
         />
         <meta
           name="twitter:image"

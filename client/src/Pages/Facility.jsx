@@ -2,95 +2,89 @@
 import React, { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { FaHospitalAlt, FaXRay, FaStethoscope, FaCapsules, FaBed } from "react-icons/fa";
+import {
+  FaHospitalAlt,
+  FaXRay,
+  FaStethoscope,
+  FaCapsules,
+  FaBed,
+} from "react-icons/fa";
 import { GiHealthNormal } from "react-icons/gi";
+import { Helmet } from "react-helmet";
 
-// Reuse the same images you already have in Home.jsx
-import ImageOne from "../assets/doc1.jpg";
-import ImageTwo from "../assets/doc2.jpg";
-
-/* -------------------- Reusable Facility Card (modern hover style) -------------------- */
-const FacilityCard = ({ icon, title, description, image, index, aosDelay = 0 }) => (
+/* -------------------- Redesigned Facility Card -------------------- */
+const FacilityCard = ({ icon, title, description, aosDelay = 0 }) => (
   <div
     data-aos="fade-up"
     data-aos-delay={aosDelay}
-    className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-500 hover:shadow-2xl"
+    className="
+      group relative flex h-full flex-col items-center text-center
+      rounded-2xl border border-[#c5d7f5]
+      bg-[#f3f8fd]
+      shadow-sm
+      px-6 py-7
+      transition-all duration-300
+      hover:bg-[#dbe9fa]
+      hover:-translate-y-1
+      hover:shadow-xl
+    "
   >
-    {/* Background image reveals on hover */}
-    {image ? (
-      <img
-        src={image}
-        alt=""
-        className="pointer-events-none absolute inset-0 h-full w-full scale-110 object-cover opacity-0 transition-all duration-500 group-hover:scale-100 group-hover:opacity-100"
-      />
-    ) : (
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(26,118,188,0.25),transparent_40%),radial-gradient(circle_at_80%_60%,rgba(0,80,157,0.25),transparent_40%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-    )}
-
-    {/* Dark overlay when hovered */}
-    <div className="pointer-events-none absolute inset-0 bg-[#0b2d56]/70 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-
-    {/* Content */}
-    <div className="relative z-10 p-8">
-      <div className="flex items-center gap-4">
-        <div className="grid h-14 w-14 place-items-center rounded-2xl bg-[#00509d]/10 text-[#00509d] transition-all duration-500 group-hover:bg-white">
-          {icon}
-        </div>
-        {/* Number tag (top-right on hover) */}
-        <span className="ml-auto text-xl font-extrabold tracking-widest text-white/90 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-          {String(index).padStart(2, "0")}
-        </span>
-      </div>
-
-      <h3 className="mt-6 text-xl font-bold text-[#00509d] transition-colors duration-500 group-hover:text-white">
-        {title}
-      </h3>
-      <p className="mt-2 text-sm text-slate-600 transition-colors duration-500 group-hover:text-white/80">
-        {description}
-      </p>
+    <div
+      className="
+        mb-4 flex h-14 w-14 items-center justify-center
+        rounded-2xl bg-white text-[#00509d]
+        transition-all duration-300
+        group-hover:bg-[#00509d]/10 group-hover:text-[#00509d]
+      "
+    >
+      {icon}
     </div>
-
-    {/* Corner accent blob */}
-    <div className="pointer-events-none absolute -bottom-10 -right-10 h-22 w-24 rounded-tl-[2rem] bg-[#1a76bc] opacity-90 transition-transform duration-500 group-hover:translate-x-10 group-hover:translate-y-10" />
+    <h3 className="text-base sm:text-lg font-bold text-[#00509d]">
+      {title}
+    </h3>
+    <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed">
+      {description}
+    </p>
   </div>
 );
 
 /* -------------------- Data -------------------- */
 const facilities = [
   {
-    icon: <FaHospitalAlt className="text-3xl" />,
+    icon: <FaHospitalAlt className="text-2xl sm:text-3xl" />,
     title: "Twin Operation Theatres",
     description:
-      "State-of-the-art twin operation theatres equipped with laminar (laminar flow) systems.",
-    image: ImageOne,
+      "State-of-the-art twin operation theatres equipped with laminar flow systems for infection control and precision surgical care.",
   },
   {
-    icon: <FaXRay className="text-3xl" />,
-    title: "C-Radius X-Ray Instrument",
+    icon: <FaXRay className="text-2xl sm:text-3xl" />,
+    title: "C-Arm & Digital X-Ray",
     description:
-      "High precision imaging with advanced C-Radius and digital X-Ray instruments.",
-    image: ImageTwo,
+      "High precision intra-operative imaging with advanced C-arm and digital X-ray instruments for orthopedic and trauma procedures.",
   },
   {
-    icon: <FaBed className="text-3xl" />,
+    icon: <FaBed className="text-2xl sm:text-3xl" />,
     title: "ICU Facilities",
     description:
-      "Intensive care units equipped with centralized oxygen and emergency support systems.",
-    image: ImageOne,
+      "Intensive care units with centralized oxygen, continuous monitoring and emergency support systems for critical patients.",
   },
   {
-    icon: <FaCapsules className="text-3xl" />,
-    title: "In-house Pharmacy",
+    icon: <FaCapsules className="text-2xl sm:text-3xl" />,
+    title: "In-house 24×7 Pharmacy",
     description:
-      "24×7 well-stocked pharmacy ensuring immediate access to prescribed medication.",
-    image: ImageTwo,
+      "Round-the-clock well-stocked pharmacy ensuring immediate access to prescribed medication within the hospital premises.",
   },
   {
-    icon: <GiHealthNormal className="text-3xl" />,
+    icon: <GiHealthNormal className="text-2xl sm:text-3xl" />,
     title: "Pain & Paralysis Relief Center",
     description:
-      "Advanced physiotherapy center for pain management and paralysis recovery programs.",
-    image: ImageOne,
+      "Advanced physiotherapy and rehabilitation center for pain management, paralysis recovery and post-surgical rehabilitation.",
+  },
+  {
+    icon: <FaStethoscope className="text-2xl sm:text-3xl" />,
+    title: "Comprehensive OPD & Diagnostics",
+    description:
+      "Dedicated outpatient departments and diagnostic support for orthopedics, neurology and rehabilitation services.",
   },
 ];
 
@@ -99,43 +93,146 @@ const Facility = () => {
     AOS.init({ duration: 800, once: true });
   }, []);
 
+  /* -------------------- JSON-LD structured data (WebPage + Breadcrumbs) -------------------- */
+  const facilitiesPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: "Hospital Facilities - Top Care Hospital Sathyamangalam",
+    url: "https://topcarehospital.com/facilities", // TODO: adjust to actual URL
+    description:
+      "Overview of hospital facilities at Top Care Hospital in Sathyamangalam, Erode district, including operation theatres, ICU, pharmacy and rehabilitation centre.",
+  };
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: "https://topcarehospital.com/",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Facilities",
+        item: "https://topcarehospital.com/facilities", // TODO: adjust to actual URL
+      },
+    ],
+  };
+
   return (
-    <div className="bg-white">
-      {/* Header */}
-      <section className="py-20 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute -top-10 -left-10 h-72 w-72 bg-[#1a76bc] rounded-full blur-3xl" />
-          <div className="absolute -bottom-10 -right-10 h-72 w-72 bg-[#00509d] rounded-full blur-3xl" />
-        </div>
+    <>
+      {/* ---------- SEO for Facilities page ---------- */}
+      <Helmet>
+        <title>
+          Hospital Facilities in Sathyamangalam, Erode | Top Care Orthopedic &
+          Neuro Hospital
+        </title>
 
-        <div className="max-w-7xl mx-auto px-6 relative">
-          <div className="text-center mb-16">
-            <span className="text-[#00509d] text-2xl font-bold">OUR FACILITIES</span>
-            <h2 className="text-4xl font-bold text-[#00509d] mt-2 mb-4">
-              Advanced Infrastructure &amp; Services
-            </h2>
-            <p className="text-lg text-slate-700 max-w-3xl mx-auto">
-              Empowering our specialists with world-class facilities to deliver exceptional care.
-            </p>
+        <meta
+          name="description"
+          content="Explore the hospital facilities at Top Care Hospital in Sathyamangalam, Erode district – twin operation theatres, ICU, C-arm and digital X-ray, 24x7 pharmacy, pain and paralysis relief centre and rehabilitation services."
+        />
+        <meta
+          name="keywords"
+          content="hospital facilities in sathyamangalam, orthopedic hospital facilities erode, operation theatre sathyamangalam, ICU hospital erode district, C arm x ray sathyamangalam, physiotherapy centre sathyamangalam, Top Care Hospital"
+        />
+        <meta name="robots" content="index,follow" />
+        {/* TODO: replace with the real deployed URL for this page */}
+        <link
+          rel="canonical"
+          href="https://topcarehospital.com/facilities"
+        />
+
+        {/* Open Graph */}
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:title"
+          content="Hospital Facilities in Sathyamangalam, Erode | Top Care Hospital"
+        />
+        <meta
+          property="og:description"
+          content="Twin operation theatres, ICU, C-arm X-ray, 24x7 pharmacy and rehabilitation facilities at Top Care Hospital, Sathyamangalam, Erode district."
+        />
+        <meta
+          property="og:url"
+          content="https://topcarehospital.com/facilities"
+        />
+        <meta property="og:site_name" content="Top Care Hospital" />
+        <meta
+          property="og:image"
+          content="https://topcarehospital.com/og-facilities.jpg" // TODO: set a real OG image
+        />
+
+        {/* Twitter Cards */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          name="twitter:title"
+          content="Hospital Facilities in Sathyamangalam, Erode | Top Care Hospital"
+        />
+        <meta
+          name="twitter:description"
+          content="View the advanced hospital infrastructure and facilities available at Top Care Hospital, Sathyamangalam, Erode district."
+        />
+        <meta
+          name="twitter:image"
+          content="https://topcarehospital.com/og-facilities.jpg"
+        />
+
+        {/* Structured Data */}
+        <script type="application/ld+json">
+          {JSON.stringify(facilitiesPageSchema)}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify(breadcrumbSchema)}
+        </script>
+      </Helmet>
+
+      <div className="bg-white">
+        <section className="py-24 relative overflow-hidden bg-gradient-to-b from-[#f3f8fd] to-white">
+          {/* Soft background accents */}
+          <div className="absolute inset-0 pointer-events-none">
+            <div className="absolute -top-10 -left-10 h-64 w-64 bg-[#1a76bc]/20 rounded-full blur-3xl" />
+            <div className="absolute -bottom-12 -right-12 h-72 w-72 bg-[#00509d]/15 rounded-full blur-3xl" />
           </div>
 
-          {/* Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {facilities.map((f, i) => (
-              <FacilityCard
-                key={f.title}
-                icon={f.icon}
-                title={f.title}
-                description={f.description}
-                image={f.image}
-                index={i + 1}
-                aosDelay={i * 100}
-              />
-            ))}
+          <div className="max-w-7xl mx-auto px-6 relative">
+            {/* Header */}
+            <div
+              className="text-center mb-14 max-w-3xl mx-auto"
+              data-aos="fade-up"
+            >
+              <span className="inline-flex items-center justify-center rounded-full bg-[#e3efff] px-4 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-[#00509d]">
+                Our Facilities
+              </span>
+              <h2 className="mt-4 text-3xl md:text-4xl font-bold text-[#00509d]">
+                Advanced Infrastructure &amp; Services in Sathyamangalam
+              </h2>
+              <p className="mt-3 text-sm md:text-base text-slate-700">
+                Empowering our specialists with world-class facilities in
+                Sathyamangalam, Erode district to deliver exceptional orthopedic,
+                neurological and rehabilitation care.
+              </p>
+            </div>
+
+            {/* Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+              {facilities.map((f, i) => (
+                <FacilityCard
+                  key={f.title}
+                  icon={f.icon}
+                  title={f.title}
+                  description={f.description}
+                  aosDelay={i * 80}
+                />
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
-    </div>
+        </section>
+      </div>
+    </>
   );
 };
 

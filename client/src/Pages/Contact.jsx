@@ -1,15 +1,22 @@
+// Contact.jsx
 import React, { useState, useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { motion } from "framer-motion";
-import { FaClock, FaPhoneAlt, FaMapMarkerAlt, FaWhatsapp } from "react-icons/fa";
+import {
+  FaClock,
+  FaPhoneAlt,
+  FaMapMarkerAlt,
+  FaWhatsapp,
+} from "react-icons/fa";
+import { Helmet } from "react-helmet";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    message: ''
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
   });
 
   useEffect(() => {
@@ -18,218 +25,394 @@ const Contact = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const sendWhatsAppMessage = (e) => {
     e.preventDefault();
-    
+
     const { name, email, phone, message } = formData;
-    const hospitalNumber = "9361784871"; // Replace with your hospital's WhatsApp number
-    const text = `New Message from TOP Care Website:
+    const hospitalNumber = "9361784871"; // WhatsApp number
+
+    const text = `New Message from Top Care Hospital Website:
     
 Name: ${name}
-Email: ${email}
+Email: ${email || "Not provided"}
 Phone: ${phone}
 Message: ${message}
 
 Please respond at your earliest convenience.`;
 
     const encodedText = encodeURIComponent(text);
-    window.open(`https://wa.me/${hospitalNumber}?text=${encodedText}`, '_blank');
+    window.open(`https://wa.me/${hospitalNumber}?text=${encodedText}`, "_blank");
+  };
+
+  // JSON-LD: ContactPage + Hospital contact details
+  const contactPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    name: "Contact Top Care Hospital Sathyamangalam",
+    url: "https://topcarehospital.com/contact",
+    description:
+      "Contact Top Care Hospital in Sathyamangalam, Erode district for orthopedic, neurology and speech therapy appointments and emergencies.",
+  };
+
+  const hospitalContactSchema = {
+    "@context": "https://schema.org",
+    "@type": "Hospital",
+    name: "Top Care Hospital - Thiyagu Ortho & Pain Care",
+    url: "https://topcarehospital.com/",
+    telephone: "+91-4295-222435",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress:
+        "113/21-24, SRN Street, Opp. to Old Bus Stand, Court Backside",
+      addressLocality: "Sathyamangalam",
+      addressRegion: "Tamil Nadu",
+      postalCode: "638402",
+      addressCountry: "IN",
+    },
+    contactPoint: [
+      {
+        "@type": "ContactPoint",
+        telephone: "+91-4295-222435",
+        contactType: "customer service",
+        areaServed: "IN",
+        availableLanguage: ["en", "ta"],
+      },
+      {
+        "@type": "ContactPoint",
+        telephone: "+91-9361784871",
+        contactType: "customer service",
+        areaServed: "IN",
+        availableLanguage: ["en", "ta"],
+      },
+    ],
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: 11.501398245403855,
+      longitude: 77.24612527480069,
+    },
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+        ],
+        opens: "09:00",
+        closes: "19:30",
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: "Sunday",
+        opens: "09:00",
+        closes: "13:00",
+      },
+    ],
   };
 
   return (
-    <div className="pt-12 bg-white min-h-screen text-gray-800">
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-20">
-        {/* Header Section */}
-        <div className="text-center mb-16" data-aos="fade-down">
-          <h2 className="text-4xl md:text-5xl font-bold text-[#00509d] mb-4">
-            Get In Touch
-          </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto text-lg">
-            We're here to help with all your orthopedic and speech therapy needs. Reach out to us anytime.
-          </p>
-        </div>
+    <>
+      <Helmet>
+        <title>
+          Contact Top Care Hospital Sathyamangalam | Ortho &amp; Speech Therapy
+          Appointments
+        </title>
+        <meta
+          name="description"
+          content="Contact Top Care Hospital in Sathyamangalam, Erode for orthopedic emergencies, fracture care, joint pain, neurology and speech therapy appointments. Call 04295 222435 / 9361784871 or send us a WhatsApp message."
+        />
+        <meta
+          name="keywords"
+          content="contact ortho hospital sathyamangalam, top care hospital phone number, Thiyagu Ortho and Pain Care contact, speech therapy hospital contact Sathyamangalam, orthopedic hospital erode contact"
+        />
+        <meta name="robots" content="index,follow" />
+        <link rel="canonical" href="https://topcarehospital.com/contact" />
 
-        <div className="grid md:grid-cols-2 gap-10 mb-16">
-          {/* Contact Information Card */}
-          <motion.div 
-            className="bg-white rounded-2xl shadow-lg p-8 border border-gray-200"
-            data-aos="fade-right"
-            whileHover={{ y: -5 }}
-          >
-            <h3 className="text-2xl font-bold text-[#00509d] mb-6 pb-2 border-b border-[#00509d]/30">
-              Contact Information
-            </h3>
-            
-            <div className="space-y-6">
-              {/* Visiting Hours */}
-              <div className="flex items-start">
-                <div className="bg-[#00509d] p-2 rounded-lg mr-4">
-                  <FaClock className="text-white text-lg" />
+        {/* Structured Data */}
+        <script type="application/ld+json">
+          {JSON.stringify(contactPageSchema)}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify(hospitalContactSchema)}
+        </script>
+      </Helmet>
+
+      <div className="pt-28 bg-gradient-to-br from-[#f0f5ff] via-white to-[#f8fbff] min-h-screen text-gray-800">
+        <section className="max-w-6xl mx-auto px-4 sm:px-6 pb-20">
+          {/* Header / Hero */}
+          <div className="text-center mb-12 md:mb-16" data-aos="fade-down">
+            <h1 className="text-xs font-semibold uppercase tracking-[0.25em] text-[#00509d] mb-3">
+              Contact Top Care Hospital – Sathyamangalam
+            </h1>
+            <h2 className="text-3xl md:text-4xl font-bold text-[#0b2d56] mb-3">
+              We&apos;re Here to Help You Heal
+            </h2>
+            <p className="text-gray-600 max-w-2xl mx-auto text-sm md:text-base">
+              Reach out for appointments, queries, or guidance on orthopedic,
+              neurology and speech therapy care in Sathyamangalam. Our team will
+              get back to you as quickly as possible.
+            </p>
+          </div>
+
+          {/* Main Content Grid */}
+          <div className="grid md:grid-cols-2 gap-10 mb-16 items-start">
+            {/* Contact Information Card */}
+            <motion.div
+              className="bg-white/90 rounded-3xl shadow-lg p-7 md:p-8 border border-[#e0e7ff] backdrop-blur-sm"
+              data-aos="fade-right"
+              whileHover={{ y: -4 }}
+              transition={{ duration: 0.25 }}
+            >
+              <h3 className="text-xl md:text-2xl font-bold text-[#00509d] mb-6 flex items-center gap-2">
+                <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#e6f1ff] text-[#00509d]">
+                  <FaPhoneAlt />
+                </span>
+                Contact Information
+              </h3>
+
+              <div className="space-y-6">
+                {/* Visiting Hours */}
+                <div className="flex gap-4">
+                  <div className="flex-shrink-0 flex items-center justify-center h-11 w-11 rounded-2xl bg-[#00509d] text-white shadow-md">
+                    <FaClock className="text-lg" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm md:text-base font-semibold text-[#00509d] mb-1">
+                      Visiting Hours
+                    </h4>
+                    <p className="text-sm text-gray-700">
+                      Morning:{" "}
+                      <span className="font-medium">
+                        9:00 AM – 2:00 PM
+                      </span>
+                    </p>
+                    <p className="text-sm text-gray-700">
+                      Evening:{" "}
+                      <span className="font-medium">
+                        4:00 PM – 7:30 PM
+                      </span>
+                    </p>
+                    <p className="text-xs text-gray-500 mt-1">
+                      *Emergency services available 24/7
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="text-lg font-semibold text-[#00509d] mb-1">Visiting Hours</h4>
-                  <p className="text-gray-600">Morning: 9:00 AM – 2:00 PM</p>
-                  <p className="text-gray-600">Evening: 4:00 PM – 7:30 PM</p>
-                  <p className="text-gray-500 text-sm mt-1">*Emergency services available 24/7</p>
+
+                {/* Phone Numbers */}
+                <div className="flex gap-4">
+                  <div className="flex-shrink-0 flex items-center justify-center h-11 w-11 rounded-2xl bg-[#00509d] text-white shadow-md">
+                    <FaPhoneAlt className="text-lg" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm md:text-base font-semibold text-[#00509d] mb-1">
+                      Contact Numbers
+                    </h4>
+                    <p className="text-sm text-gray-700">
+                      Landline: <span className="font-medium">04295 222435</span>
+                    </p>
+                    <p className="text-sm text-gray-700">
+                      Alternate: <span className="font-medium">04295 297466</span>
+                    </p>
+                    <p className="text-sm text-gray-700">
+                      Mobile:{" "}
+                      <a
+                        href="tel:+919361784871"
+                        className="font-medium text-[#00509d]"
+                      >
+                        9361784871
+                      </a>
+                    </p>
+                  </div>
+                </div>
+
+                {/* WhatsApp Direct */}
+                <div className="flex gap-4">
+                  <div className="flex-shrink-0 flex items-center justify-center h-11 w-11 rounded-2xl bg-[#22c55e] text-white shadow-md">
+                    <FaWhatsapp className="text-lg" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm md:text-base font-semibold text-[#00509d] mb-1">
+                      WhatsApp Support
+                    </h4>
+                    <p className="text-sm text-gray-700 mb-3">
+                      Message us directly on WhatsApp for quick responses about
+                      appointments and reports.
+                    </p>
+                    <a
+                      href="https://wa.me/9361784871"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center px-4 py-2 rounded-full bg-[#22c55e] text-white text-xs md:text-sm font-semibold shadow-md hover:bg-[#16a34a] transition-colors"
+                    >
+                      <FaWhatsapp className="mr-2" /> Chat on WhatsApp
+                    </a>
+                  </div>
+                </div>
+
+                {/* Address */}
+                <div className="flex gap-4">
+                  <div className="flex-shrink-0 flex items-center justify-center h-11 w-11 rounded-2xl bg-[#00509d] text-white shadow-md">
+                    <FaMapMarkerAlt className="text-lg" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm md:text-base font-semibold text-[#00509d] mb-1">
+                      Our Location
+                    </h4>
+                    <p className="text-sm text-gray-700 leading-relaxed">
+                      113/21-24, SRN Street, <br />
+                      Opposite to Old Bus Stand, <br />
+                      Court Backside, <br />
+                      Sathyamangalam - 638402, Tamil Nadu, India
+                    </p>
+                  </div>
                 </div>
               </div>
+            </motion.div>
 
-              {/* Phone Numbers */}
-              <div className="flex items-start">
-                <div className="bg-[#00509d] p-2 rounded-lg mr-4">
-                  <FaPhoneAlt className="text-white text-lg" />
-                </div>
-                <div>
-                  <h4 className="text-lg font-semibold text-[#00509d] mb-1">Contact Numbers</h4>
-                  <p className="text-gray-600">04295 222435</p>
-                  <p className="text-gray-600">04295 297466</p>
-                  <p className="text-gray-600">Mobile: 9361784871</p>
-                </div>
-              </div>
+            {/* Contact Form */}
+            <motion.div
+              className="bg-white/90 rounded-3xl shadow-lg p-7 md:p-8 border border-[#e0e7ff] backdrop-blur-sm"
+              data-aos="fade-left"
+              whileHover={{ y: -4 }}
+              transition={{ duration: 0.25 }}
+            >
+              <h3 className="text-xl md:text-2xl font-bold text-[#00509d] mb-2">
+                Send Us a Message
+              </h3>
+              <p className="text-xs md:text-sm text-gray-500 mb-5">
+                Fill in your details below and your message will be sent to us
+                via WhatsApp. We&apos;ll reply as soon as possible during
+                working hours.
+              </p>
 
-              {/* WhatsApp Direct */}
-              <div className="flex items-start">
-                <div className="bg-[#00509d] p-2 rounded-lg mr-4">
-                  <FaWhatsapp className="text-white text-lg" />
-                </div>
+              <form className="space-y-4" onSubmit={sendWhatsAppMessage}>
                 <div>
-                  <h4 className="text-lg font-semibold text-[#00509d] mb-1">WhatsApp</h4>
-                  <p className="text-gray-600 mb-2">Message us directly on WhatsApp</p>
-                  <a 
-                    href="https://wa.me/9361784871" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                  <label
+                    htmlFor="name"
+                    className="block text-xs md:text-sm text-gray-600 mb-1.5"
                   >
-                    <FaWhatsapp className="mr-2" /> Chat Now
-                  </a>
+                    Full Name<span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2.5 rounded-lg bg-[#f8fafc] border border-gray-300 text-gray-800 placeholder-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-[#00509d] focus:border-transparent"
+                    placeholder="Enter your name"
+                    required
+                  />
                 </div>
-              </div>
 
-              {/* Address */}
-              <div className="flex items-start">
-                <div className="bg-[#00509d] p-2 rounded-lg mr-4">
-                  <FaMapMarkerAlt className="text-white text-lg" />
-                </div>
                 <div>
-                  <h4 className="text-lg font-semibold text-[#00509d] mb-1">Our Location</h4>
-                  <p className="text-gray-600">
-                    113/21-24, SRN Street,<br />
-                    Opposite to Old Bus Stand,<br />
-                    Court Backside,<br />
-                    Sathyamangalam - 2
-                  </p>
+                  <label
+                    htmlFor="email"
+                    className="block text-xs md:text-sm text-gray-600 mb-1.5"
+                  >
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2.5 rounded-lg bg-[#f8fafc] border border-gray-300 text-gray-800 placeholder-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-[#00509d] focus:border-transparent"
+                    placeholder="Enter your email (optional)"
+                  />
                 </div>
-              </div>
-            </div>
-          </motion.div>
 
-          {/* Contact Form */}
-          <motion.div 
-            className="bg-white rounded-2xl shadow-lg p-8 border border-gray-200"
-            data-aos="fade-left"
-            whileHover={{ y: -5 }}
+                <div>
+                  <label
+                    htmlFor="phone"
+                    className="block text-xs md:text-sm text-gray-600 mb-1.5"
+                  >
+                    Phone Number<span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2.5 rounded-lg bg-[#f8fafc] border border-gray-300 text-gray-800 placeholder-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-[#00509d] focus:border-transparent"
+                    placeholder="Enter your phone number"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="message"
+                    className="block text-xs md:text-sm text-gray-600 mb-1.5"
+                  >
+                    Your Message<span className="text-red-500">*</span>
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows="4"
+                    value={formData.message}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2.5 rounded-lg bg-[#f8fafc] border border-gray-300 text-gray-800 placeholder-gray-400 text-sm focus:outline-none focus:ring-2 focus:ring-[#00509d] focus:border-transparent resize-none"
+                    placeholder="How can we help you?"
+                    required
+                  ></textarea>
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full py-3 px-6 bg-[#00509d] text-white text-sm md:text-base font-semibold rounded-full shadow-md hover:bg-[#003f75] transition-colors duration-300 flex items-center justify-center gap-2"
+                >
+                  <FaWhatsapp className="text-base" />
+                  Send via WhatsApp
+                </button>
+              </form>
+            </motion.div>
+          </div>
+
+          {/* Map Section */}
+          <motion.div
+            className="rounded-3xl overflow-hidden shadow-lg border border-[#e0e7ff] bg-white"
+            data-aos="fade-up"
+            whileHover={{ scale: 1.01 }}
+            transition={{ duration: 0.25 }}
           >
-            <h3 className="text-2xl font-bold text-[#00509d] mb-6 pb-2 border-b border-[#00509d]/30">
-              Send Us a Message
-            </h3>
-            
-            <form className="space-y-5">
-              <div>
-                <label htmlFor="name" className="block text-gray-600 mb-2">Full Name*</label>
-                <input 
-                  type="text" 
-                  id="name" 
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-300 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#00509d] focus:border-transparent"
-                  placeholder="Enter your name"
-                  required
-                />
+            <div className="flex items-center justify-between px-4 sm:px-6 py-4 bg-[#00509d]">
+              <div className="flex items-center gap-2">
+                <FaMapMarkerAlt className="text-white" />
+                <h3 className="text-base sm:text-lg font-semibold text-white">
+                  Our Location on Map
+                </h3>
               </div>
-              
-              <div>
-                <label htmlFor="email" className="block text-gray-600 mb-2">Email Address</label>
-                <input 
-                  type="email" 
-                  id="email" 
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-300 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#00509d] focus:border-transparent"
-                  placeholder="Enter your email"
-                />
-              </div>
-              
-              <div>
-                <label htmlFor="phone" className="block text-gray-600 mb-2">Phone Number*</label>
-                <input 
-                  type="tel" 
-                  id="phone" 
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-300 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#00509d] focus:border-transparent"
-                  placeholder="Enter your phone number"
-                  required
-                />
-              </div>
-              
-              <div>
-                <label htmlFor="message" className="block text-gray-600 mb-2">Your Message*</label>
-                <textarea 
-                  id="message" 
-                  name="message"
-                  rows="4"
-                  value={formData.message}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-300 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#00509d] focus:border-transparent"
-                  placeholder="How can we help you?"
-                  required
-                ></textarea>
-              </div>
-              
-              <button 
-                type="submit"
-                onClick={sendWhatsAppMessage}
-                className="w-full py-3 px-6 bg-[#00509d] text-white font-semibold rounded-lg shadow-md hover:bg-[#003f75] transition-colors duration-300 flex items-center justify-center"
-              >
-                <FaWhatsapp className="mr-2" /> Send via WhatsApp
-              </button>
-            </form>
+              <span className="hidden sm:inline text-xs text-blue-100">
+                Tap to zoom &amp; navigate
+              </span>
+            </div>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3741.70700280046!2d77.24612527480069!3d11.501398245403855!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba92125aec3d609%3A0x1b16b4ff25e6b240!2sThiyagu%20Ortho%20and%20pain%20care%20hospital!5e1!3m2!1sen!2sin!4v1753717415667!5m2!1sen!2sin"
+              width="100%"
+              height="420"
+              style={{ border: 0 }}
+              allowFullScreen=""
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Thiyagu Ortho and Pain Care Hospital Location - Top Care Hospital Sathyamangalam"
+            ></iframe>
           </motion.div>
-        </div>
-
-        {/* Map Section */}
-        <motion.div 
-          className="rounded-2xl overflow-hidden shadow-lg border border-gray-200"
-          data-aos="fade-up"
-          whileHover={{ scale: 1.01 }}
-        >
-          <h3 className="text-xl font-semibold text-white bg-[#00509d] p-4">
-            <FaMapMarkerAlt className="inline mr-2" />
-            Our Location on Map
-          </h3>
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3741.70700280046!2d77.24612527480069!3d11.501398245403855!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba92125aec3d609%3A0x1b16b4ff25e6b240!2sThiyagu%20Ortho%20and%20pain%20care%20hospital!5e1!3m2!1sen!2sin!4v1753717415667!5m2!1sen!2sin"
-            width="100%"
-            height="450"
-            style={{ border: 0 }}
-            allowFullScreen=""
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            title="Thiyagu Ortho and Pain Care Hospital Location"
-          ></iframe>
-        </motion.div>
-      </section>
-    </div>
+        </section>
+      </div>
+    </>
   );
 };
 

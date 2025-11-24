@@ -1,5 +1,5 @@
 // SpeechTrainingServices.jsx
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import {
@@ -9,102 +9,255 @@ import {
   FaChild,
   FaAssistiveListeningSystems,
   FaRegListAlt,
-  FaArrowRight,
   FaPhoneAlt,
-  FaCalendarCheck
+  FaCalendarCheck,
+  FaChevronLeft,
+  FaChevronRight,
 } from "react-icons/fa";
 import { GiBrain, GiStethoscope, GiTalk, GiTeacher } from "react-icons/gi";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
-/* -------------------- Reusable Hover Card (same as your Home style) -------------------- */
-const FeatureCard = ({ icon, title, description, image, index, aosDelay = 0 }) => (
-  <div
-    data-aos="fade-up"
-    data-aos-delay={aosDelay}
-    className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-500 hover:shadow-2xl"
-  >
-    {/* Background image shows on hover */}
-    <img
-      src={image}
-      alt=""
-      className="pointer-events-none absolute inset-0 h-full w-full scale-110 object-cover opacity-0 transition-all duration-500 group-hover:scale-100 group-hover:opacity-100"
-    />
-    {/* Dark overlay on hover */}
-    <div className="pointer-events-none absolute inset-0 bg-[#0b2d56]/70 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+/* -------------------- Count Up Component -------------------- */
+const CountUp = ({ end, suffix = "", duration = 2000 }) => {
+  const [count, setCount] = useState(0);
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const ref = useRef(null);
 
-    {/* Content */}
-    <div className="relative z-10 p-8">
-      <div className="flex items-center gap-4">
-        <div className="grid h-14 w-14 place-items-center rounded-2xl bg-[#00509d]/10 text-[#00509d] transition-all duration-500 group-hover:bg-white">
-          {icon}
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated) {
+          setHasAnimated(true);
+          let start = 0;
+          const increment = end / (duration / 16); // ~60fps
+
+          const timer = setInterval(() => {
+            start += increment;
+            if (start > end) {
+              setCount(end);
+              clearInterval(timer);
+            } else {
+              setCount(Math.ceil(start));
+            }
+          }, 16);
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => {
+      if (ref.current) {
+        observer.unobserve(ref.current);
+      }
+    };
+  }, [end, duration, hasAnimated]);
+
+  return (
+    <span ref={ref} className="text-2xl font-bold text-[#00509d]">
+      {count}
+      {suffix}
+    </span>
+  );
+};
+
+/* -------------------- Enhanced Carousel Component -------------------- */
+const ProgramCarousel = ({ items }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
+
+  const minSwipeDistance = 50;
+
+  const nextSlide = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === items.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? items.length - 1 : prevIndex - 1
+    );
+  };
+
+  const goToSlide = (index) => {
+    setCurrentIndex(index);
+  };
+
+  // Touch handlers for mobile swipe
+  const onTouchStart = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
+      nextSlide();
+    } else if (isRightSwipe) {
+      prevSlide();
+    }
+  };
+
+  // Auto-play
+  useEffect(() => {
+    const interval = setInterval(nextSlide, 5000);
+    return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [items.length]);
+
+  return (
+    <div className="relative w-full max-w-6xl mx-auto">
+      {/* Main Carousel Container */}
+      <div
+        className="relative overflow-hidden rounded-3xl shadow-2xl bg-white"
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+      >
+        {/* Carousel Track */}
+        <div
+          className="flex transition-transform duration-500 ease-out"
+          style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+        >
+          {items.map((item, index) => (
+            <div key={index} className="w-full flex-shrink-0">
+              <div className="grid lg:grid-cols-2 gap-8 p-8">
+                {/* Image Section */}
+                <div className="relative">
+                  <div className="relative overflow-hidden rounded-2xl shadow-xl">
+                    <img
+                      src={item.img}
+                      alt={item.alt}
+                      className="w-full h-80 object-cover transition-transform duration-700 hover:scale-105"
+                    />
+                    {/* Gradient Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-tr from-[#0b2d56]/40 via-transparent to-transparent" />
+
+                    {/* Badge */}
+                    <div className="absolute top-4 left-4 bg-white/90 rounded-full px-4 py-2 shadow">
+                      <span className="text-[#00509d] font-semibold text-sm">
+                        Program {index + 1}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Decorative Elements */}
+                  <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-[#1a76bc]/20 rounded-full blur-xl" />
+                  <div className="absolute -top-4 -left-4 w-16 h-16 bg-[#00509d]/20 rounded-full blur-lg" />
+                </div>
+
+                {/* Content Section */}
+                <div className="flex flex-col justify-center space-y-6">
+                  <div>
+                    <span className="inline-flex items-center gap-2 rounded-full bg-[#00509d]/10 px-4 py-2 text-sm font-semibold text-[#00509d]">
+                      Featured Program
+                    </span>
+                    <h3 className="mt-4 text-2xl font-bold text-[#0b2d56] leading-tight">
+                      {item.title}
+                    </h3>
+                    <p className="mt-4 text-base text-slate-700 leading-relaxed">
+                      {item.text}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
-        <span className="ml-auto text-xl font-extrabold tracking-widest text-white/90 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
-          {String(index).padStart(2, "0")}
-        </span>
+
+        {/* Nav Arrows */}
+        <button
+          onClick={prevSlide}
+          className="hidden md:flex absolute left-4 top-1/2 -translate-y-1/2 h-10 w-10 items-center justify-center rounded-full bg-white/90 shadow hover:bg-white text-[#00509d] transition"
+          aria-label="Previous program"
+        >
+          <FaChevronLeft />
+        </button>
+        <button
+          onClick={nextSlide}
+          className="hidden md:flex absolute right-4 top-1/2 -translate-y-1/2 h-10 w-10 items-center justify-center rounded-full bg-white/90 shadow hover:bg-white text-[#00509d] transition"
+          aria-label="Next program"
+        >
+          <FaChevronRight />
+        </button>
       </div>
 
-      <h3 className="mt-6 text-xl font-bold text-[#00509d] transition-colors duration-500 group-hover:text-white">
-        {title}
-      </h3>
-      <p className="mt-2 text-sm text-slate-600 transition-colors duration-500 group-hover:text-white/80">
-        {description}
-      </p>
-    </div>
+      {/* Indicators */}
+      <div className="flex justify-center mt-8 space-x-3">
+        {items.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => goToSlide(index)}
+            className={`h-2 rounded-full transition-all duration-300 ${
+              index === currentIndex
+                ? "bg-[#00509d] w-8"
+                : "bg-[#1a76bc]/30 w-3 hover:bg-[#1a76bc]/60"
+            }`}
+            aria-label={`Go to slide ${index + 1}`}
+          />
+        ))}
+      </div>
 
-    {/* Corner accent blob */}
-    <div className="pointer-events-none absolute -bottom-10 -right-10 h-22 w-24 rounded-tl-[2rem] bg-[#1a76bc] opacity-90 transition-transform duration-500 group-hover:translate-x-10 group-hover:translate-y-10" />
-  </div>
-);
-
-/* -------------------- Modern InfoRow --------------------
-   - Gradient "frame" + glass card
-   - Image with subtle overlay + accent corner
-   - Small badge and CTAs
---------------------------------------------------------- */
-const InfoRow = ({ title, img, alt, text, reverse = false, aosDelay = 0 }) => (
-  <div
-    className={`group grid items-center gap-8 md:gap-12 md:grid-cols-2 ${
-      reverse ? "md:[&>*:first-child]:order-2" : ""
-    }`}
-    data-aos="fade-up"
-    data-aos-delay={aosDelay}
-  >
-    {/* Image block */}
-    <div className="relative">
-      <div className="relative overflow-hidden rounded-3xl shadow-xl ring-1 ring-slate-200">
-        <img
-          src={img}
-          alt={alt}
-          className="h-72 w-full object-cover transition-transform duration-700 group-hover:scale-105"
+      {/* Progress Bar */}
+      <div className="mt-4 w-full bg-gray-200 rounded-full h-1 overflow-hidden">
+        <div
+          className="bg-[#00509d] h-1 rounded-full transition-all duration-500 ease-linear"
+          style={{
+            width: `${((currentIndex + 1) / items.length) * 100}%`,
+          }}
         />
-        <div className="absolute inset-0 bg-gradient-to-tr from-[#0b2d56]/40 via-transparent to-transparent" />
-      </div>
-      {/* Accent corner */}
-      </div>
-
-    {/* Text block with gradient frame */}
-    <div className="relative">
-      <div className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-[#1a76bc] via-[#00509d] to-[#1a76bc] opacity-30 blur group-hover:opacity-60 transition" />
-      <div className="relative rounded-3xl bg-white/80 backdrop-blur p-6 md:p-8 shadow-lg ring-1 ring-slate-200">
-        <span className="inline-flex items-center gap-2 rounded-full bg-[#00509d]/10 px-3 py-1 text-xs font-semibold text-[#00509d]">
-          Program Highlight
-        </span>
-        <h3 className="mt-3 text-2xl md:text-3xl font-semibold text-[#00509d]">
-          {title}
-        </h3>
-        <p className="mt-3 leading-relaxed text-slate-700">{text}</p>
-
-        <div className="mt-6">
-          <Link
-            to="/contact"
-            className="inline-flex items-center gap-2 text-[#00509d] font-medium hover:text-[#1a76bc] transition-colors"
-          >
-            Learn more about this program
-            <FaArrowRight className="text-sm" />
-          </Link>
-        </div>
       </div>
     </div>
+  );
+};
+
+/* -------------------- Redesigned Service Card -------------------- */
+const ServiceCard = ({ icon, title, description, aosDelay = 0 }) => (
+  <div
+    data-aos="fade-up"
+    data-aos-delay={aosDelay}
+    className="
+      group relative flex h-full flex-col items-center text-center
+      rounded-2xl border border-[#c5d7f5]
+      bg-[#f3f8fd]
+      shadow-sm
+      px-5 py-6
+      transition-all duration-300
+      hover:bg-[#dbe9fa]
+      hover:-translate-y-1
+      hover:shadow-xl
+    "
+  >
+    <div
+      className="
+        mb-4 grid h-12 w-12 sm:h-14 sm:w-14 place-items-center
+        rounded-2xl bg-white text-[#00509d]
+        transition-all duration-300
+        group-hover:bg-[#00509d]/10 group-hover:text-[#00509d]
+      "
+    >
+      {icon}
+    </div>
+    <h3 className="text-sm sm:text-base font-bold text-[#00509d]">
+      {title}
+    </h3>
+    <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed">
+      {description}
+    </p>
   </div>
 );
 
@@ -113,377 +266,432 @@ const SpeechTrainingServices = () => {
     AOS.init({ duration: 800, once: true });
   }, []);
 
+  /* -------------------- JSON-LD structured data -------------------- */
+  const speechClinicSchema = {
+    "@context": "https://schema.org",
+    "@type": "MedicalClinic",
+    name: "Chandru's Speech & Language Centre - Top Care Hospital",
+    description:
+      "Speech therapy centre in Sathyamangalam, Erode offering diagnosis, assessment and therapy for speech, language and communication disorders in children and adults.",
+    url: "https://topcarehospital.com/speech-therapy", // TODO: replace with actual live URL
+    telephone: "+91-4295-222435",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress:
+        "113/21-24, SRN Street, Opp. to Old Bus Stand, Court Backside",
+      addressLocality: "Sathyamangalam",
+      addressRegion: "Tamil Nadu",
+      postalCode: "638402",
+      addressCountry: "IN",
+    },
+    medicalSpecialty: ["SpeechPathology", "Rehabilitation"],
+    parentOrganization: {
+      "@type": "Hospital",
+      name: "Top Care Hospital",
+      url: "https://topcarehospital.com/",
+    },
+  };
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "When should I bring my child for speech therapy?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "If your child is not speaking clearly, has limited words for their age, has difficulty understanding instructions or has been diagnosed with autism, ADHD or other developmental conditions, an early speech and language assessment is recommended.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Do you offer speech therapy for autism in Sathyamangalam?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Yes. Chandru's Speech & Language Centre at Top Care Hospital offers specialised therapy programs for children with autism spectrum disorder, focusing on communication, social skills and functional language.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Is speech therapy available in Tamil and English?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Yes. Therapy sessions are provided in Tamil and English based on the child's home language and communication needs.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Do you provide speech therapy after cochlear implant surgery?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Yes. We offer specialised cochlear implant rehabilitation focusing on listening skills, sound discrimination and language development for children and adults.",
+        },
+      },
+    ],
+  };
+
   /* -------------------- Services list -------------------- */
   const services = [
     {
       title: "Diagnosis of Speech & Language Disorders in Children",
       description:
         "Early identification of speech and language challenges in children to ensure timely and effective intervention.",
-      icon: <FaComments className="text-3xl" />,
+      icon: <FaComments className="text-xl sm:text-2xl" />,
     },
     {
       title: "Assessment, Counseling & Training",
       description:
         "Personalized evaluation, guidance, and therapy plans to support communication development.",
-      icon: <GiStethoscope className="text-3xl" />,
+      icon: <GiStethoscope className="text-xl sm:text-2xl" />,
     },
     {
       title: "Autism Support",
       description:
         "Specialized programs to enhance speech, social skills, and communication in children with autism.",
-      icon: <GiBrain className="text-3xl" />,
+      icon: <GiBrain className="text-xl sm:text-2xl" />,
     },
     {
       title: "Attention Deficit Disorders (ADHD)",
       description:
         "Strategies to improve attention and communication in children with ADHD.",
-      icon: <FaBrain className="text-3xl" />,
+      icon: <FaBrain className="text-xl sm:text-2xl" />,
     },
     {
       title: "Brain Development Disorders & Epilepsy",
       description:
         "Therapy for children affected by neurological conditions to enhance communication.",
-      icon: <FaUserMd className="text-3xl" />,
+      icon: <FaUserMd className="text-xl sm:text-2xl" />,
     },
     {
       title: "Cerebral Palsy & Neurodevelopmental Disorders",
       description:
         "Therapy to improve speech and communication skills in children with CP and other disorders.",
-      icon: <FaChild className="text-3xl" />,
+      icon: <FaChild className="text-xl sm:text-2xl" />,
     },
     {
       title: "Speech Therapy After Cochlear Implant",
       description:
         "Specialized language training for individuals post cochlear implant surgery.",
-      icon: <FaAssistiveListeningSystems className="text-3xl" />,
+      icon: <FaAssistiveListeningSystems className="text-xl sm:text-2xl" />,
     },
     {
       title: "Learning Disabilities & I.E.P.",
       description:
         "Customized educational plans and therapy for learning challenges.",
-      icon: <GiTeacher className="text-3xl" />,
+      icon: <GiTeacher className="text-xl sm:text-2xl" />,
     },
     {
       title: "Speech Disorders",
       description:
         "Therapy for articulation, fluency, and voice issues to improve communication.",
-      icon: <GiTalk className="text-3xl" />,
+      icon: <GiTalk className="text-xl sm:text-2xl" />,
     },
     {
       title: "Disorganized Speech Disorders",
       description:
         "Support for individuals with incoherent or fragmented speech patterns.",
-      icon: <FaRegListAlt className="text-3xl" />,
+      icon: <FaRegListAlt className="text-xl sm:text-2xl" />,
     },
     {
       title: "Voice Disorder Therapy",
       description:
         "Voice modulation and therapy for individuals with voice abnormalities.",
-      icon: <GiTalk className="text-3xl" />,
+      icon: <GiTalk className="text-xl sm:text-2xl" />,
     },
     {
       title: "Post-Stroke Speech Rehabilitation",
       description:
         "Speech and swallowing therapy for individuals recovering from strokes or accidents.",
-      icon: <FaBrain className="text-3xl" />,
+      icon: <FaBrain className="text-xl sm:text-2xl" />,
     },
   ];
 
-  /* -------------------- Long-form content sections -------------------- */
-  const speechContent = [
+  /* -------------------- Carousel Items -------------------- */
+  const carouselItems = [
     {
-      title:
-        "Diagnosing Speech & Language disorders in children / Assessment / Counseling & Training",
-      img: "/SpeechOne.jpg",
-      alt: "Diagnosing Speech Disorders",
-      text: `A comprehensive evaluation of a child's communication skills—assessing speech clarity, vocabulary, comprehension, and social interaction. Conducted by a speech-language pathologist (SLP) through tests, observation, and parent input. Early detection enables timely intervention for developmental delays, articulation issues, stuttering, and language disorders, improving long-term outcomes.`,
-      reverse: false,
-    },
-    {
-      title:
-        "Brain Development Disorders (MR) and language impairments due to Epilepsy",
-      img: "/SpeechTwo.jpg",
-      alt: "Brain Development Disorders",
-      text: `Disorders like intellectual disability (formerly MR) and epilepsy can disrupt a child's learning, speech, and daily functioning. Genetic factors, prenatal issues, or early seizures may impair language development by affecting key brain areas. Early intervention with therapy and medical care is critical to support communication skills and cognitive growth.`,
-      reverse: true,
-    },
-    {
-      title: "Autism Spectrum Disorder (ASD)",
+      title: "Autism Spectrum Disorder (ASD) Program",
       img: "/SpeechThree.jpg",
-      alt: "Autism Support",
-      text: `Autism is a neurodevelopmental condition affecting communication, social interaction, and behavior. Children with autism often experience speech delays, difficulty with social cues, repetitive behaviors, and sensory sensitivities. Early intervention with speech therapy, social skills training, and behavioral support can significantly improve communication, independence, and quality of life.`,
-      reverse: false,
+      alt: "Autism speech therapy program in Sathyamangalam",
+      text: "Comprehensive therapy program designed to enhance communication, social skills, and behavioral development for children with autism. Our evidence-based approach includes social skills training and parent coaching.",
     },
     {
-      title: "Attention Deficit Disorders (ADHD)",
-      img: "/SpeechFour.jpg",
-      alt: "ADHD",
-      text: `ADHD is a neurodevelopmental disorder marked by inattention, hyperactivity, and impulsivity. Effective management includes behavioral therapy, medication, structured routines, and educational support.`,
-      reverse: true,
+      title: "Speech & Language Assessment",
+      img: "/SpeechOne.jpg",
+      alt: "Child speech and language assessment",
+      text: "Detailed diagnostic evaluations to identify speech and language challenges. Our certified pathologists use standardized tests and observational methods to create personalized intervention plans.",
     },
     {
-      title: "Cerebral Palsy",
-      img: "/SpeechFive.jpg",
-      alt: "Cerebral Palsy",
-      text: `Cerebral Palsy (CP) is a neurological condition affecting movement, posture, and muscle control due to early brain damage. While CP is permanent, early intervention with therapy significantly enhances independence and communication abilities.`,
-      reverse: false,
-    },
-    {
-      title: "Neurodevelopmental Disorders",
-      img: "/SpeechSix.jpg",
-      alt: "Neurodevelopmental Disorders",
-      text: `Neurodevelopmental disorders like autism, ADHD, and cerebral palsy affect brain development. Early diagnosis and personalized therapy plans can greatly improve learning, social, and communication outcomes.`,
-      reverse: true,
-    },
-    {
-      title: "Post-Cochlear Implant Speech Therapy",
+      title: "Cochlear Implant Rehabilitation",
       img: "/SpeechSeven.jpg",
-      alt: "Cochlear Implant Therapy",
-      text: `Therapy after cochlear implants focuses on training the brain to interpret sound and build language skills. Early and consistent therapy is vital for speech improvement and social integration.`,
-      reverse: false,
+      alt: "Cochlear implant speech therapy in Erode district",
+      text: "Specialized auditory-verbal therapy for children and adults with cochlear implants. Focus on sound discrimination, language development, and communication skills in real-world environments.",
     },
     {
-      title: "Learning Disabilities (LD) & IEP Support",
-      img: "/SpeechEight.jpg",
-      alt: "Learning Disabilities",
-      text: `Learning disabilities affect specific academic skills. We build Individualized Education Plans (IEPs) with strategies and support tailored to each child's unique challenges and strengths.`,
-      reverse: true,
+      title: "ADHD & Executive Function Training",
+      img: "/SpeechFour.jpg",
+      alt: "ADHD communication training program",
+      text: "Targeted interventions to improve attention, organization, and communication skills. Combining behavioral strategies with speech therapy to enhance academic and social success.",
     },
     {
-      title: "Speech Disorders & Therapy Solutions",
-      img: "/SpeechNine.jpg",
-      alt: "Speech Disorders",
-      text: `Speech disorders affect sound production, fluency, or voice. Our therapists create individualized plans using evidence-based methods to restore and improve speech clarity.`,
-      reverse: false,
+      title: "Cerebral Palsy Communication Program",
+      img: "/SpeechFive.jpg",
+      alt: "Cerebral palsy speech therapy in Sathyamangalam",
+      text: "Multidisciplinary approach to support communication in children with cerebral palsy. Includes AAC device training, oral motor exercises, and family-centered therapy sessions.",
     },
-    {
-      title: "Disorganized Speech Disorders",
-      img: "/SpeechTen.jpg",
-      alt: "Disorganized Speech",
-      text: `Disorganized speech impairs coherent communication and is often associated with cognitive or psychiatric conditions. Therapy focuses on sequencing, clarity, and comprehension.`,
-      reverse: true,
-    },
-    {
-      title: "Voice Disorder Therapy & Rehabilitation",
-      img: "/SpeechEleven.jpg",
-      alt: "Voice Disorders",
-      text: `We address pitch, volume, and voice quality disorders through vocal exercises, posture correction, and medical collaboration to restore healthy voice patterns.`,
-      reverse: false,
-    },
-  ];
-
-  // rotate images for the service cards (uses your existing assets)
-  const serviceImages = [
-    "/SpeechOne.jpg",
-    "/SpeechTwo.jpg",
-    "/SpeechThree.jpg",
-    "/SpeechFour.jpg",
-    "/SpeechFive.jpg",
-    "/SpeechSix.jpg",
-    "/SpeechSeven.jpg",
-    "/SpeechEight.jpg",
-    "/SpeechNine.jpg",
-    "/SpeechTen.jpg",
-    "/SpeechEleven.jpg",
-    "/SpeechOne.jpg",
   ];
 
   return (
-    <div className="bg-white py-14">
-      {/* -------------------- MODERN HERO -------------------- */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#f0f8ff] to-[#e6f2ff] py-16 md:py-24">
-        {/* Background elements */}
-        <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
-          <div className="absolute -top-24 -left-24 w-96 h-96 bg-[#1a76bc]/10 rounded-full blur-3xl"></div>
-          <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-[#00509d]/10 rounded-full blur-3xl"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-72 bg-[#1a76bc]/5 rounded-full blur-3xl"></div>
-        </div>
-        
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div data-aos="fade-right" data-aos-delay="100">
-              <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur rounded-full px-4 py-2 text-lg font-medium text-[#00509d] mb-6 border border-[#00509d]/20">
-                
-                Chandru's Speech & Language Centre
-              </div>
-              
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#0b2d56] leading-tight">
-                Empowering <span className="text-[#00509d]">Communication</span> Through Specialized Therapy
-              </h1>
-              
-              <p className="mt-6 text-lg text-slate-700 leading-relaxed">
-                Early diagnosis, evidence-based therapy, and family-centered care. 
-                We help every voice be heard—clearly and confidently.
-              </p>
-              
-              <div className="mt-8 space-y-4">
-                <div className="flex items-center gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-[#00509d]/10 flex items-center justify-center text-[#00509d]">
-                    <FaUserMd className="text-xl" />
-                  </div>
-                  <p className="text-slate-700">Individualized therapy plans guided by certified SLPs</p>
+    <>
+      {/* ---------- SEO for Speech Therapy page ---------- */}
+      <Helmet>
+        <title>
+          Speech Therapy Centre in Sathyamangalam, Erode | Chandru&apos;s Speech
+          &amp; Language Centre
+        </title>
+
+        <meta
+          name="description"
+          content="Chandru's Speech & Language Centre at Top Care Hospital offers speech therapy in Sathyamangalam, Erode for children and adults with speech, language, autism, ADHD, cerebral palsy, cochlear implant and communication disorders."
+        />
+        <meta
+          name="keywords"
+          content="speech therapy centre in sathyamangalam, speech therapist for kids erode, autism speech therapy sathyamangalam, cochlear implant speech therapy erode, speech therapy for cerebral palsy, Chandru's Speech & Language Centre, Top Care Hospital"
+        />
+        <meta name="robots" content="index,follow" />
+        {/* TODO: replace href with actual deployed URL of this page */}
+        <link
+          rel="canonical"
+          href="https://topcarehospital.com/speech-therapy"
+        />
+
+        {/* Open Graph */}
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:title"
+          content="Speech Therapy Centre in Sathyamangalam, Erode | Chandru's Speech & Language Centre"
+        />
+        <meta
+          property="og:description"
+          content="Specialised speech therapy for children and adults with speech, language and communication disorders at Chandru's Speech & Language Centre, Top Care Hospital, Sathyamangalam, Erode district."
+        />
+        <meta
+          property="og:url"
+          content="https://topcarehospital.com/speech-therapy"
+        />
+        <meta property="og:site_name" content="Top Care Hospital" />
+        <meta
+          property="og:image"
+          content="https://topcarehospital.com/og-speech-therapy.jpg" // TODO: set a real OG image
+        />
+
+        {/* Twitter Cards */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          name="twitter:title"
+          content="Speech Therapy Centre in Sathyamangalam, Erode | Chandru's Speech & Language Centre"
+        />
+        <meta
+          name="twitter:description"
+          content="Speech, language and communication therapy for autism, ADHD, cerebral palsy, learning disability and post-stroke rehabilitation in Sathyamangalam, Erode."
+        />
+        <meta
+          name="twitter:image"
+          content="https://topcarehospital.com/og-speech-therapy.jpg"
+        />
+
+        {/* Structured Data */}
+        <script type="application/ld+json">
+          {JSON.stringify(speechClinicSchema)}
+        </script>
+        <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
+      </Helmet>
+
+      <div className="bg-white py-20">
+        {/* -------------------- MODERN HERO -------------------- */}
+        <section className="relative overflow-hidden bg-gradient-to-br from-[#f0f8ff] to-[#e6f2ff] py-12">
+          {/* Background elements */}
+          <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
+            <div className="absolute -top-12 -left-12 sm:-top-24 sm:-left-24 w-48 h-48 sm:w-96 sm:h-96 bg-[#1a76bc]/10 rounded-full blur-3xl" />
+            <div className="absolute -bottom-12 -right-12 sm:-bottom-24 sm:-right-24 w-48 h-48 sm:w-96 sm:h-96 bg-[#00509d]/10 rounded-full blur-3xl" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl h-48 sm:h-72 bg-[#1a76bc]/5 rounded-full blur-3xl" />
+          </div>
+
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+              <div data-aos="fade-right" data-aos-delay="100">
+                <div className="inline-flex items-center gap-2 bg-white/90 rounded-full px-3 py-1 sm:px-4 sm:py-2 text-sm font-medium text-[#00509d] mb-4 sm:mb-6 border border-[#00509d]/15">
+                  Chandru&apos;s Speech &amp; Language Centre
                 </div>
-                
-                <div className="flex items-center gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-[#00509d]/10 flex items-center justify-center text-[#00509d]">
-                    <FaBrain className="text-xl" />
-                  </div>
-                  <p className="text-slate-700">Specialized programs for ASD, ADHD, CP, Epilepsy & Cochlear Implants</p>
-                </div>
-                
-                <div className="flex items-center gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-[#00509d]/10 flex items-center justify-center text-[#00509d]">
-                    <GiTeacher className="text-xl" />
-                  </div>
-                  <p className="text-slate-700">Parent training, IEP support, and home program guidance</p>
-                </div>
+
+                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#0b2d56] leading-tight">
+                  Speech Therapy Centre in{" "}
+                  <span className="text-[#00509d]">
+                    Sathyamangalam, Erode District
+                  </span>
+                </h1>
+
+                <p className="mt-4 sm:mt-6 text-sm sm:text-base text-slate-700 leading-relaxed">
+                  Early diagnosis, evidence-based therapy, and family-centered
+                  care for children and adults. We help every voice be heard
+                  clearly and confidently at our speech therapy centre in
+                  Sathyamangalam, Erode.
+                </p>
               </div>
 
-              <div className="mt-10 flex flex-wrap gap-4">
-                <Link
-                  to="/contact"
-                  className="inline-flex items-center gap-2 rounded-full bg-[#00509d] px-6 py-4 text-white font-medium hover:bg-[#1a76bc] transition-all shadow-lg hover:shadow-xl"
-                >
-                  <FaCalendarCheck className="text-lg" />
-                  Book an Assessment
-                </Link>
-                <a
-                  href="tel:+91-0000000000"
-                  className="inline-flex items-center gap-2 rounded-full border border-[#00509d] px-6 py-4 text-[#00509d] font-medium hover:bg-[#00509d] hover:text-white transition-all"
-                >
-                  <FaPhoneAlt className="text-lg" />
-                  Call Now
-                </a>
+              {/* Hero Image Collage */}
+              <div
+                className="relative h-[350px]"
+                data-aos="fade-left"
+                data-aos-delay="200"
+              >
+                <div className="absolute top-0 left-0 w-3/5 h-3/5 rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl z-10">
+                  <img
+                    src="/SpeechOne.jpg"
+                    alt="Child speech therapy session at Sathyamangalam speech centre"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0b2d56]/70 to-transparent" />
+                </div>
+
+                <div className="absolute top-1/3 right-0 w-3/5 h-2/5 rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl z-20">
+                  <img
+                    src="/SpeechTwo.jpg"
+                    alt="Speech therapist working with child in Erode district"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0b2d56]/70 to-transparent" />
+                </div>
               </div>
             </div>
-
-            {/* Hero Image Collage */}
-            <div className="relative h-[500px] lg:h-[600px]" data-aos="fade-left" data-aos-delay="200">
-              <div className="absolute top-0 left-0 w-3/5 h-3/5 rounded-3xl overflow-hidden shadow-2xl z-10">
-                <img
-                  src="/SpeechOne.jpg"
-                  alt="Therapy session"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0b2d56]/70 to-transparent"></div>
-              </div>
-              
-              <div className="absolute top-1/3 right-0 w-3/5 h-2/5 rounded-3xl overflow-hidden shadow-2xl z-20">
-                <img
-                  src="/SpeechTwo.jpg"
-                  alt="Child therapy"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0b2d56]/70 to-transparent"></div>
-              </div>
-              
-              <div className="absolute bottom-0 left-1/4 w-3/5 h-2/5 rounded-3xl overflow-hidden shadow-2xl z-30">
-                <img
-                  src="/SpeechThree.jpg"
-                  alt="Parent guidance"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0b2d56]/70 to-transparent"></div>
-              </div>
-              
-              {/* Floating elements */}
-              <div className="absolute -top-4 -right-4 w-24 h-24 rounded-full bg-[#1a76bc]/20 backdrop-blur-sm border border-[#1a76bc]/30 z-0"></div>
-              <div className="absolute -bottom-4 -left-4 w-16 h-16 rounded-full bg-[#00509d]/20 backdrop-blur-sm border border-[#00509d]/30 z-0"></div>
-            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* -------------------- QUICK SERVICES GRID (hover cards) -------------------- */}
-      <section className="py-16 md:py-24 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-14" data-aos="fade-up">
-            <span className="text-[#00509d] text-sm font-semibold tracking-widest uppercase">Our Expertise</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#0b2d56] mt-2">
-              Comprehensive Speech & Language Services
-            </h2>
-            <p className="text-lg text-slate-700 max-w-3xl mx-auto mt-4">
-              Explore our evidence-based programs designed to build clear speech, rich language, and confident communication.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            {services.map((s, i) => (
-              <FeatureCard
-                key={s.title}
-                icon={s.icon}
-                title={s.title}
-                description={s.description}
-                image={serviceImages[i % serviceImages.length]}
-                index={i + 1}
-                aosDelay={i * 80}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* -------------------- LONG-FORM INFO SECTIONS (modern InfoRow) -------------------- */}
-      <section className="py-16 md:py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-14" data-aos="fade-up">
-            <span className="text-[#00509d] text-sm font-semibold tracking-widest uppercase">Our Programs</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#0b2d56] mt-2">
-              Specialized Therapy Approaches
-            </h2>
-            <p className="text-lg text-slate-700 max-w-3xl mx-auto mt-4">
-              Discover our targeted interventions for various speech and language challenges.
-            </p>
-          </div>
-          
-          <div className="space-y-16 md:space-y-20">
-            {speechContent.map((item, idx) => (
-              <InfoRow key={item.title} {...item} aosDelay={idx * 80} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* -------------------- MODERN CTA -------------------- */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-[#0b2d56] to-[#1a76bc]">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="relative overflow-hidden rounded-4xl md:rounded-[3rem] bg-white/5 backdrop-blur-sm border border-white/10 p-10 md:p-16 shadow-2xl">
-            <div className="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-white/5 blur-2xl"></div>
-            <div className="absolute -bottom-20 -left-20 w-64 h-64 rounded-full bg-white/5 blur-2xl"></div>
-            
-            <div className="relative z-10 text-center">
-              <h3 className="text-3xl md:text-4xl font-bold text-white">
-                Begin Your Communication Journey Today
-              </h3>
-              <p className="mt-4 text-lg text-white/90 max-w-2xl mx-auto">
-                Take the first step toward clearer communication. Book an assessment and receive a personalized therapy plan tailored to your needs.
-              </p>
-              
-              <div className="mt-8 flex flex-wrap justify-center gap-4">
-                <Link
-                  to="/contact"
-                  className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-4 text-[#00509d] font-semibold hover:bg-slate-100 transition-all shadow-lg hover:shadow-xl"
-                >
-                  <FaCalendarCheck className="text-lg" />
-                  Schedule Assessment
-                </Link>
-                <a
-                  href="tel:+91-0000000000"
-                  className="inline-flex items-center gap-2 rounded-full border border-white px-6 py-4 text-white font-semibold hover:bg-white hover:text-[#00509d] transition-all"
-                >
-                  <FaPhoneAlt className="text-lg" />
-                  Call +91 00000 00000
-                </a>
-              </div>
-              
-              <p className="mt-6 text-sm text-white/70">
-                We're available Monday to Saturday, 9 AM to 6 PM
+        {/* -------------------- ENHANCED PROGRAM CAROUSEL SECTION -------------------- */}
+        <section className="py-12 bg-gradient-to-br from-white to-blue-50/30">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6">
+            <div className="text-center mb-14" data-aos="fade-up">
+              <span className="text-[#00509d] text-xs font-semibold tracking-widest uppercase">
+                Featured Programs
+              </span>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#0b2d56] mt-3">
+                Our <span className="text-[#00509d]">Specialized</span> Therapy
+                Programs
+              </h2>
+              <p className="text-base text-slate-700 max-w-3xl mx-auto mt-4">
+                Discover our comprehensive therapy programs designed to address
+                specific communication challenges with evidence-based
+                approaches.
               </p>
             </div>
+
+            <div data-aos="fade-up" data-aos-delay="200">
+              <ProgramCarousel items={carouselItems} />
+            </div>
+
+            {/* Stats with Count Animation */}
+            <div
+              className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16"
+              data-aos="fade-up"
+              data-aos-delay="300"
+            >
+              <div className="text-center p-6 bg-white rounded-2xl shadow-lg border border-slate-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <CountUp end={500} suffix="+" duration={2500} />
+                <div className="text-xs text-slate-600 mt-2">Children Helped</div>
+              </div>
+              <div className="text-center p-6 bg-white rounded-2xl shadow-lg border border-slate-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <CountUp end={95} suffix="%" duration={2000} />
+                <div className="text-xs text-slate-600 mt-2">Success Rate</div>
+              </div>
+              <div className="text-center p-6 bg-white rounded-2xl shadow-lg border border-slate-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <CountUp end={12} suffix="+" duration={1500} />
+                <div className="text-xs text-slate-600 mt-2">
+                  Therapy Programs
+                </div>
+              </div>
+              <div className="text-center p-6 bg-white rounded-2xl shadow-lg border border-slate-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div className="text-2xl font-bold text-[#00509d]">24/7</div>
+                <div className="text-xs text-slate-600 mt-2">Parent Support</div>
+              </div>
+            </div>
           </div>
-        </div>
-      </section>
-    </div>
+        </section>
+
+        {/* -------------------- SERVICES GRID -------------------- */}
+        <section className="py-12 md:py-20 lg:py-24 bg-slate-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6">
+            <div className="text-center mb-10 sm:mb-14" data-aos="fade-up">
+              <span className="text-[#00509d] text-xs font-semibold tracking-widest uppercase">
+                Our Expertise
+              </span>
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#0b2d56] mt-2">
+                Comprehensive Speech &amp; Language Services
+              </h2>
+              <p className="text-sm text-slate-700 max-w-3xl mx-auto mt-3 sm:mt-4 px-4">
+                Explore our evidence-based programs designed to build clear
+                speech, rich language, and confident communication for children
+                and adults in Sathyamangalam and Erode district.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
+              {services.map((s, i) => (
+                <ServiceCard
+                  key={s.title}
+                  icon={s.icon}
+                  title={s.title}
+                  description={s.description}
+                  aosDelay={i * 80}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* -------------------- MODERN CTA -------------------- */}
+        <section className="py-12 md:py-20 lg:py-24 bg-gradient-to-br from-[#0b2d56] to-[#1a76bc]">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6">
+            <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl md:rounded-[3rem] bg-white/5 backdrop-blur-sm border border-white/10 p-6 sm:p-8 md:p-12 lg:p-16 shadow-2xl">
+              <div className="absolute -top-10 -right-10 sm:-top-20 sm:-right-20 w-32 h-32 sm:w-64 sm:h-64 rounded-full bg-white/5 blur-2xl" />
+              <div className="absolute -bottom-10 -left-10 sm:-bottom-20 sm:-left-20 w-32 h-32 sm:w-64 sm:h-64 rounded-full bg-white/5 blur-2xl" />
+
+              <div className="relative z-10 text-center">
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white leading-tight">
+                  Begin Your Communication Journey Today
+                </h3>
+                <p className="mt-3 sm:mt-4 text-sm text-white/90 max-w-2xl mx-auto">
+                  Take the first step toward clearer communication. Book an
+                  assessment and receive a personalized therapy plan tailored to
+                  your needs at Chandru&apos;s Speech &amp; Language Centre,
+                  Sathyamangalam.
+                </p>
+
+                <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
+                  <Link
+                    to="/contact"
+                    className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-5 py-3 sm:px-6 sm:py-4 text-[#00509d] font-semibold hover:bg-slate-100 transition-all shadow-lg hover:shadow-xl text-sm"
+                  >
+                    <FaCalendarCheck className="text-base sm:text-lg" />
+                    Schedule Assessment
+                  </Link>
+                  <a
+                    href="tel:+914295222435"
+                    className="inline-flex items-center justify-center gap-2 rounded-full border border-white px-5 py-3 sm:px-6 sm:py-4 text-white font-semibold hover:bg-white hover:text-[#00509d] transition-all text-sm"
+                  >
+                    <FaPhoneAlt className="text-base sm:text-lg" />
+                    Call 04295 222435
+                  </a>
+                </div>
+
+                <p className="mt-4 sm:mt-6 text-xs text-white/70">
+                  We&apos;re available Monday to Saturday, 9 AM to 6 PM
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </>
   );
 };
 

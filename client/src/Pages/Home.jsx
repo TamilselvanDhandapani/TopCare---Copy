@@ -302,7 +302,7 @@ const Home = () => {
 
           <div className="max-w-6xl mx-auto px-6 flex flex-col-reverse lg:flex-row items-center justify-between gap-14">
             {/* Left Content */}
-            <div className="w-3/4 space-y-5 text-white">
+            <div className=" space-y-5 text-white">
               <span className="inline-flex items-center gap-2 rounded-full bg-[#f3f8fd] px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-[#00509d]">
                 Trusted Ortho & Speech Care
               </span>
@@ -341,13 +341,13 @@ const Home = () => {
         </section>
 
         {/* Ortho Services Section */}
-        <section className="py-16 bg-[#f8fafc]">
+        <section className="py-12 bg-[#f8fafc]">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="mb-12 text-center max-w-2xl mx-auto">
+            <div className="mb-6 text-center max-w-2xl mx-auto">
               <span className="text-sm font-semibold uppercase tracking-[0.25em] text-[#00509d]">
                 Ortho Services
               </span>
-              <h2 className="text-3xl md:text-4xl font-bold text-[#00509d] mt-2">
+              <h2 className="text-2xl md:text-4xl font-bold text-[#00509d] mt-2">
                 Specialized Orthopedic Care in Sathyamangalam
               </h2>
               <p className="mt-3 text-gray-700 text-sm md:text-base">
@@ -404,7 +404,7 @@ const Home = () => {
         </section>
 
         {/* Our Impact Section */}
-        <section className="relative py-20 overflow-hidden">
+        <section className="relative py-10 overflow-hidden">
           {/* Gradient background */}
           <div className="absolute inset-0 -z-20 bg-gradient-to-br from-[#00152f] via-[#003a7a] to-[#1a76bc]" />
           {/* Soft blobs */}

@@ -253,14 +253,14 @@ const About = () => {
                 >
                   <Link
                     to="/contact"
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-[#1a76bc] text-white px-6 py-3 text-sm sm:text-base font-semibold shadow-lg hover:bg-[#00509d] transition-all"
+                    className="inline-flex items-center justify-center gap-2 rounded-full bg-[#1a76bc] text-white px-4 py-3 text-sm sm:text-base font-semibold shadow-lg hover:bg-[#00509d] transition-all"
                   >
                     Book an Appointment
                     <FaArrowRight className="text-xs" />
                   </Link>
                   <Link
                     to="/services"
-                    className="inline-flex items-center justify-center rounded-full border border-white/70 text-white px-6 py-3 text-sm sm:text-base font-semibold hover:bg-white hover:text-[#00509d] transition-all"
+                    className="inline-flex items-center justify-center rounded-full border border-white/70 text-white px-4 py-3 text-sm sm:text-base font-semibold hover:bg-white hover:text-[#00509d] transition-all"
                   >
                     View Services
                   </Link>

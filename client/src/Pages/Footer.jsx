@@ -172,24 +172,11 @@ const Footer = () => {
 
         {/* Footer Bottom */}
         <div className="pt-4 border-t border-slate-200/70">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-3">
-            <p className="text-gray-500 text-xs sm:text-sm text-center md:text-left">
+          <div className=" gap-3">
+            <p className="text-gray-500 text-xs sm:text-sm text-center ">
               &copy; {year} TOP Care Hospital. All rights reserved.
             </p>
-            <div className="flex flex-wrap justify-center gap-4 text-xs sm:text-sm">
-              <a
-                href="#"
-                className="text-gray-500 hover:text-[#00509d] transition-colors"
-              >
-                Terms &amp; Conditions
-              </a>
-              <a
-                href="#"
-                className="text-gray-500 hover:text-[#00509d] transition-colors"
-              >
-                Privacy Policy
-              </a>
-            </div>
+            
           </div>
         </div>
       </div>

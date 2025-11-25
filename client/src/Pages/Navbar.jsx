@@ -105,9 +105,7 @@ const Navbar = () => {
                   `}
                 >
                   <span>{item.name}</span>
-                  {active && (
-                    <span className="absolute left-4 right-4 -bottom-1 h-[2px] rounded-full bg-[#00509d]" />
-                  )}
+                  
                 </Link>
               );
             })}

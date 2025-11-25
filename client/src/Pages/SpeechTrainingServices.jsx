@@ -537,7 +537,7 @@ const SpeechTrainingServices = () => {
         <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
       </Helmet>
 
-      <div className="bg-white py-20">
+      <div className="bg-white py-16">
         {/* -------------------- MODERN HERO -------------------- */}
         <section className="relative overflow-hidden bg-gradient-to-br from-[#f0f8ff] to-[#e6f2ff] py-12">
           {/* Background elements */}

@@ -9,11 +9,13 @@ import Contact from './Pages/Contact';
 import Services from './Pages/Service';
 import Facility from './Pages/Facility';
 import SpeechTrainingServices from './Pages/SpeechTrainingServices';
+import ScrollToTop from './ScrollToTop';
 
 const App = () => {
   return (
     <>
       <Router>
+      <ScrollToTop/>
         <Navbar/>
         <Routes>
           <Route path="/" element={<Home/>}/>

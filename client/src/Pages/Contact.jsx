@@ -155,7 +155,7 @@ Please respond at your earliest convenience.`;
           {/* Header / Hero */}
           <div className="text-center mb-12 md:mb-16" data-aos="fade-down">
             <h1 className="text-xs font-semibold uppercase tracking-[0.25em] text-[#00509d] mb-3">
-              Contact Top Care Hospital – Sathyamangalam
+               Top Care Hospital – Sathyamangalam
             </h1>
             <h2 className="text-3xl md:text-4xl font-bold text-[#0b2d56] mb-3">
               We&apos;re Here to Help You Heal

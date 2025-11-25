@@ -9,8 +9,8 @@ const ScrollToTop = () => {
     // Jump to top whenever route changes
     window.scrollTo({
       top: 0,
-      left: 0,
-      behavior: "instant", // use "smooth" if you want nice animation
+      
+      behavior: "smooth", // use "smooth" if you want nice animation
     });
   }, [pathname]);
 
